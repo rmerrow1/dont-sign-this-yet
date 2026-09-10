@@ -42,7 +42,7 @@ export default function Home() {
   if(!nextSteps.length) nextSteps.push("Review the final buyer's order and financing contract before signing.");
   nextSteps.push("Take your time and ask for the paperwork to review before making a decision.");
 
-  const Field=({label,id,type="number",children})=><div className="field"><label htmlFor={id}>{label}</label>{children || <input id={id} type={type} value={form[id]} onChange={e=>update(id,type==="number"?Number(e.target.value):e.target.value)}/>}</div>;
+  const Field=({label,id,type="number",children})=><div className="field"><label htmlFor={id}>{label}</label>{children || <input id={id} type={type} inputMode={type==="number"?"decimal":undefined} value={form[id]} onChange={e=>update(id,e.target.value)}/>}</div>;
 
   return <main>
     <header>
