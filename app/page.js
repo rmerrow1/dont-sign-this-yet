@@ -327,7 +327,10 @@ function Kpi({label,value}){
 }
 
 function Bar({label,value}){
-  return <div className="barRow"><div><span>{label}</span><b>{Math.round(value)}/25</b></div><div className="bar"><i style={{width:`${value/25*100}%`}}/></div>
+  return <div className="barRow">
+    <div><span>{label}</span><b>{Math.round(value)}/25</b></div>
+    <div className="bar"><i style={{width:`${value/25*100}%`}} /></div>
+  </div>
 }
 
 function InfoSection({id,title,subtitle,items}){
