@@ -190,17 +190,55 @@ const nextSteps = [
             </div>
   <div className="marketGuide">
   <strong>💡 Need help estimating market value?</strong>
+
   <p>
-    Use a trusted vehicle-value source to estimate what this vehicle should
-    reasonably sell for in your area.
+    Before entering a market value, compare this vehicle using its exact
+    year, make, model, trim, mileage and condition.
   </p>
-  <p>
-    For the most useful comparison, use the exact year, make, model, trim,
-    mileage and condition. Local market conditions can also affect the value.
-  </p>
+
+  <div className="marketLinks">
+    <p><strong>Research the vehicle's value:</strong></p>
+
+    <p>
+      <a
+        href="https://www.kbb.com/whats-my-car-worth/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Kelley Blue Book — My Car's Value →
+      </a>
+    </p>
+
+    <p>
+      <a
+        href="https://www.edmunds.com/appraisal/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Edmunds — Vehicle Appraisal →
+      </a>
+    </p>
+
+    <p>
+      <a
+        href="https://www.jdpower.com/jd-power-pricing-and-values"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        J.D. Power — Pricing & Values →
+      </a>
+    </p>
+  </div>
+
   <p className="muted">
-    Enter that estimate above — don't use the dealer's asking price as the
-    market value.
+    These are third-party estimates. Values can differ based on mileage,
+    condition, equipment and local market conditions. Use the results as
+    a reference—not a guarantee.
+  </p>
+
+  <p className="muted">
+    Enter your best-supported estimate above. Don't use the dealer's asking
+    price as the market value.
   </p>
 </div>
           </Section>
