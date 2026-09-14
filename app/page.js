@@ -61,16 +61,83 @@ export default function Home() {
     document.getElementById("results")?.scrollIntoView({behavior:"smooth",block:"start"});
   };
 
-  const progress = Math.round(Object.values(form).filter(v=>String(v)!=="").length/Object.keys(initial).length*100);
+const progress = Math.round(Object.values(form).filter(v=>String(v)!=="").length/Object.keys(initial).length*100);
 
-  const nextSteps=[];
-  if(result.caps.length) nextSteps.push("Ask the dealer to explain and improve the critical red-flag items.");
-  if(result.aprDiff>=3) nextSteps.push("Compare this APR with a bank or credit-union quote.");
-  if(result.term>=72) nextSteps.push("Ask for the payment and total interest with a shorter loan term.");
-  if(result.addonPct>=5) nextSteps.push("Request an itemized list of every add-on and ask which ones are optional.");
-  if(result.negPct>=10) nextSteps.push("Confirm exactly how much old loan balance is being rolled into this deal.");
-  if(!nextSteps.length) nextSteps.push("Review the final buyer's order and financing contract before signing.");
-  nextSteps.push("Take your time and ask for the paperwork to review before making a decision.");
+const price = Number(form.price) || 0;
+const market = Number(form.market) || 1;
+const fees = Number(form.fees) || 0;
+const income = Number(form.income) || 1;
+const expenses = Number(form.expenses) || 1;
+const insurance = Number(form.insurance) || 0;
+const fuel = Number(form.fuel) || 0;
+const maintenance = Number(form.maintenance) || 0;
+const neg = Math.max(0,(Number(form.tradeOwed)||0)-(Number(form.tradeValue)||0));
+
+const priceDiff = ((price-market)/market)*100;
+const feePct = fees/Math.max(price,1)*100;
+const transportRatio = (result.monthly+insurance+fuel+maintenance)/income*100;
+const reserveMonths = Math.max(0,(Number(form.savings)||0)-(Number(form.down)||0))/expenses;
+
+const scoreReasons = [];
+
+if(priceDiff >= 5){
+  scoreReasons.push(
+    `Vehicle price is ${money(price-market)} (${Math.round(priceDiff)}%) above the estimated fair market value. Ask the dealer to explain the difference or negotiate closer to market value.`
+  );
+}
+
+if(result.aprDiff >= 3){
+  scoreReasons.push(
+    `The APR is ${result.aprDiff.toFixed(1)} percentage points above the estimated benchmark. Compare an outside bank or credit-union offer before signing.`
+  );
+}
+
+if(result.term >= 72){
+  scoreReasons.push(
+    `The loan term is ${result.term} months. Ask to see the total interest and payment with a shorter term before focusing on the monthly payment.`
+  );
+}
+
+if(neg > 0){
+  scoreReasons.push(
+    `You appear to be rolling ${money(neg)} of negative equity into the new deal. Confirm exactly how much of the old loan is being carried forward.`
+  );
+}
+
+if(result.addonPct >= 5){
+  scoreReasons.push(
+    `Dealer add-ons equal about ${Math.round(result.addonPct)}% of the vehicle price. Request an itemized list and ask which products are optional.`
+  );
+}
+
+if(feePct >= 2){
+  scoreReasons.push(
+    `Dealer fees are about ${Math.round(feePct)}% of the vehicle price. Ask for an itemized explanation of every fee.`
+  );
+}
+
+if(transportRatio > 25){
+  scoreReasons.push(
+    `Estimated monthly transportation costs are about ${Math.round(transportRatio)}% of take-home pay. Make sure the payment remains comfortable after insurance, fuel and maintenance.`
+  );
+}
+
+if(reserveMonths < 1){
+  scoreReasons.push(
+    "After the down payment, your listed savings provide less than one month of essential expenses. Consider how much cash you want to keep available after buying the vehicle."
+  );
+}
+
+if(result.score < 70 && scoreReasons.length === 0){
+  scoreReasons.push(
+    "Several deal factors are weighing on the score. Review the price, financing, fees and affordability numbers before signing."
+  );
+}
+
+const nextSteps = [
+  "Review the final buyer's order and financing contract before signing.",
+  "Take your time and ask for the paperwork to review before making a decision."
+];
 
   return <main>
     <header>
@@ -244,13 +311,18 @@ export default function Home() {
             }
 
             {calculated &&
-              <div className="next">
-                <h3>What to do next</h3>
-                <ul>
-                  {nextSteps.slice(0,4).map((s,i)=><li key={i}>{s}</li>)}
-                </ul>
-              </div>
-            }
+  <div className="next">
+    <h3>Why this score</h3>
+    <ul>
+      {scoreReasons.slice(0,4).map((reason,i)=><li key={i}>{reason}</li>)}
+    </ul>
+
+    <h3>What to do next</h3>
+    <ul>
+      {nextSteps.map((s,i)=><li key={i}>{s}</li>)}
+    </ul>
+  </div>
+}
           </section>
         </aside>
       </div>
