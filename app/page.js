@@ -14,6 +14,7 @@ const money = n => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD
 
 export default function Home() {
   const [form,setForm] = useState(initial);
+  const [marketSource,setMarketSource] = useState("multiple");
   const [calculated,setCalculated] = useState(true);
   const result = useMemo(()=>calculateDealScore(form),[form]);
 
