@@ -196,7 +196,21 @@ const nextSteps = [
     year, make, model, trim, mileage and condition.
   </p>
 
-  <div className="marketLinks">
+ <div className="marketSource">
+  <label htmlFor="marketSource"><strong>How did you estimate the market value?</strong></label>
+  <select
+    id="marketSource"
+    value={marketSource}
+    onChange={e => setMarketSource(e.target.value)}
+  >
+    <option value="multiple">I compared multiple sources</option>
+    <option value="kbb">Kelley Blue Book</option>
+    <option value="edmunds">Edmunds</option>
+    <option value="jdpower">J.D. Power</option>
+    <option value="other">Another source</option>
+    <option value="unsure">I'm not sure</option>
+  </select>
+</div> <div className="marketLinks">
     <p><strong>Research the vehicle's value:</strong></p>
 
     <p>
