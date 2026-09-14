@@ -188,6 +188,21 @@ const nextSteps = [
               <Field label="Vehicle price ($)" id="price" value={form["price"]} onChange={value => update("price", value)}/>
               <Field label="Estimated fair market value ($)" id="market" value={form["market"]} onChange={value => update("market", value)}/>
             </div>
+  <div className="marketGuide">
+  <strong>💡 Need help estimating market value?</strong>
+  <p>
+    Use a trusted vehicle-value source to estimate what this vehicle should
+    reasonably sell for in your area.
+  </p>
+  <p>
+    For the most useful comparison, use the exact year, make, model, trim,
+    mileage and condition. Local market conditions can also affect the value.
+  </p>
+  <p className="muted">
+    Enter that estimate above — don't use the dealer's asking price as the
+    market value.
+  </p>
+</div>
           </Section>
 
           <Section title="💰 Financing">
