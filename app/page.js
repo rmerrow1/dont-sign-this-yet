@@ -287,13 +287,13 @@ const marketConfidence =
                   <option value="deep">Deep Subprime</option>
                 </select>
               </div>
-            </div><div className="financeGuide">
+          <div className="financeGuide">
   <strong>💡 Check the financing before you sign</strong>
 
   <p>
-    Compare the APR you're being offered with rates available from a bank or
-    credit union. A lower APR can save you significant money over the life of
-    the loan.
+    Compare the APR you're being offered with rates available from a bank
+    or credit union. A lower APR can save you significant money over the
+    life of the loan.
   </p>
 
   <p>
@@ -301,9 +301,34 @@ const marketConfidence =
     but may increase the total interest you pay.
   </p>
 
+  <p>
+    <strong>Compare current auto-loan rates:</strong>
+  </p>
+
+  <p>
+    <a
+      href="https://www.bankrate.com/loans/auto-loans/rates/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Bankrate — Current Auto Loan Rates →
+    </a>
+  </p>
+
+  <p>
+    <a
+      href="https://www.nerdwallet.com/auto-loans"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      NerdWallet — Auto Loan Resources →
+    </a>
+  </p>
+
   <p className="muted">
-    Your credit profile, vehicle type, loan term and current market rates can
-    all affect the rate you qualify for.
+    These are comparison resources, not guarantees of the rate you will
+    qualify for. Your credit profile, vehicle, loan term and lender can
+    affect your actual APR.
   </p>
 </div>
           </Section>
