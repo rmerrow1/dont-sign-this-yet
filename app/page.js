@@ -5,9 +5,9 @@ import { calculateDealScore } from "../lib/scoring";
 import "./globals.css";
 
 const initial = {
-  condition:"new", price:30000, market:30000, apr:6.5, term:48, down:5000, credit:"prime",
-  tradeValue:0, tradeOwed:0, addons:0, fees:300, income:6000, savings:15000,
-  expenses:3500, insurance:160, fuel:140, maintenance:70
+  condition:"new", price:"", market:"", apr:"", term:48, down:"", credit:"prime",
+  tradeValue:"", tradeOwed:"", addons:"", fees:"", income:"", savings:"",
+  expenses:"", insurance:"", fuel:"", maintenance:""
 };
 
 const money = n => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
