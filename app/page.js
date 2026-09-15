@@ -404,7 +404,7 @@ const marketConfidence =
             <p className="muted">
               {calculated
                 ?"Review the strengths and concerns below before making your decision."
-                :"You changed a deal number. Tap Calculate My Deal Score to update the score."}
+                :"Enter your deal numbers, then tap Calculate My Deal Score to see your score."}
             </p>
 
             {attempted && validation.length>0 &&
