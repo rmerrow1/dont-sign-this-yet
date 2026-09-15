@@ -287,7 +287,25 @@ const marketConfidence =
                   <option value="deep">Deep Subprime</option>
                 </select>
               </div>
-            </div>
+            </div><div className="financeGuide">
+  <strong>💡 Check the financing before you sign</strong>
+
+  <p>
+    Compare the APR you're being offered with rates available from a bank or
+    credit union. A lower APR can save you significant money over the life of
+    the loan.
+  </p>
+
+  <p>
+    Also check the loan term. A longer term can lower the monthly payment,
+    but may increase the total interest you pay.
+  </p>
+
+  <p className="muted">
+    Your credit profile, vehicle type, loan term and current market rates can
+    all affect the rate you qualify for.
+  </p>
+</div>
           </Section>
 
           <Section title="🔄 Trade-In">
