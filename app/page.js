@@ -387,7 +387,7 @@ const marketConfidence =
             {calculated &&
   <div className="next">
     <h3>Why this score</h3>
-    <ul>
+    <p className="muted"><strong>Market value confidence:</strong> {marketConfidence}</p><ul>
       {scoreReasons.slice(0,4).map((reason,i)=><li key={i}>{reason}</li>)}
     </ul>
 
