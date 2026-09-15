@@ -312,7 +312,26 @@ const marketConfidence =
             <div className="formGrid">
               <Field label="Trade-in value ($)" id="tradeValue" value={form["tradeValue"]} onChange={value => update("tradeValue", value)}/>
               <Field label="Amount still owed ($)" id="tradeOwed" value={form["tradeOwed"]} onChange={value => update("tradeOwed", value)}/>
-            </div>
+            </div><div className="tradeGuide">
+  <strong>💡 Check your trade-in carefully</strong>
+
+  <p>
+    Compare your trade-in's value with what you still owe on the old loan.
+    If you owe more than the vehicle is worth, the difference is negative
+    equity and may be added to your new loan.
+  </p>
+
+  <p>
+    Ask the dealer to show exactly how your trade-in value, loan payoff and
+    any negative equity are reflected in the final paperwork.
+  </p>
+
+  <p className="muted">
+    A higher trade-in value does not necessarily mean you're getting a better
+    deal. Look at the complete transaction, including the new vehicle price
+    and financing.
+  </p>
+</div>
           </Section>
 
           <Section title="📋 Deal extras">
