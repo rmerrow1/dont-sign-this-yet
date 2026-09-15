@@ -44,7 +44,7 @@ export default function Home() {
     for (const [key, label] of optional) {
       const raw = String(form[key] ?? "").trim();
       const value = Number(form[key]);
-      if (!raw || !Number.isFinite(value) || value < 0) {
+   if (raw && (!Number.isFinite(value) || value < 0)) {
         errors.push(`Enter a valid ${label}.`);
       }
     }
