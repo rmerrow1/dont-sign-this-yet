@@ -16,6 +16,7 @@ export default function Home() {
   const [form,setForm] = useState(initial);
   const [marketSource,setMarketSource] = useState("multiple");
   const [calculated,setCalculated] = useState(false);
+  const [attempted,setAttempted] = useState(false);
   const result = useMemo(()=>calculateDealScore(form),[form]);
 
   const validation = useMemo(() => {
@@ -57,7 +58,8 @@ export default function Home() {
   };
 
   const calculate=()=>{
-    if (validation.length) return;
+  setAttempted(true);
+  if (validation.length) return;
     setCalculated(true);
     document.getElementById("results")?.scrollIntoView({behavior:"smooth",block:"start"});
   };
@@ -405,14 +407,14 @@ const marketConfidence =
                 :"You changed a deal number. Tap Calculate My Deal Score to update the score."}
             </p>
 
-            {validation.length>0 &&
+            {attempted && validation.length>0 &&
               <div className="validation">
                 <b>Please check your numbers:</b>
                 <ul>{validation.map((e,i)=><li key={i}>{e}</li>)}</ul>
               </div>
             }
 
-            <div className={calculated ? "resultsData" : "resultsData stale"}>
+        <div className={calculated ? "resultsData" : "resultsData stale"} hidden={!calculated}>
               <div className="staleNotice">
                 Your deal changed. The figures below are from the last calculation.
               </div>
