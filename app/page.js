@@ -285,7 +285,8 @@ const marketConfidence =
                   <option value="near">Near Prime</option>
                   <option value="sub">Subprime</option>
                   <option value="deep">Deep Subprime</option>
-                </select>
+                </select>    
+      </div>
               </div>
           <div className="financeGuide">
   <strong>💡 Check the financing before you sign</strong>
