@@ -135,7 +135,13 @@ if(result.score < 70 && scoreReasons.length === 0){
   );
 }
 
-const nextSteps = [
+const marketConfidence =
+  marketSource === "multiple"
+    ? "Stronger estimate — you compared multiple valuation sources."
+    : marketSource === "unsure"
+    ? "Verify this number before relying on the score."
+    : "Reasonable starting point — consider comparing another valuation source.";
+  const nextSteps = [
   "Review the final buyer's order and financing contract before signing.",
   "Take your time and ask for the paperwork to review before making a decision."
 ];
