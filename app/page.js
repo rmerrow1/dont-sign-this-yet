@@ -715,6 +715,20 @@ outTheDoor: "",
   This is the total price you're being asked to pay before financing, including the vehicle price, taxes, title/registration, dealer fees and add-ons.
 </p>
 </div> 
+  <div className="worksheetField">
+  <Field label="Taxes ($)" id="ws-taxes" value={data.taxes} onChange={update("taxes")} />
+  <p className="muted">Enter the sales tax shown on the dealer's paperwork.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Title & registration ($)" id="ws-title-registration" value={data.titleRegistration} onChange={update("titleRegistration")} />
+  <p className="muted">Enter title, registration and tag charges shown on the paperwork.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Other government fees ($)" id="ws-government-fees" value={data.otherGovernmentFees} onChange={update("otherGovernmentFees")} />
+  <p className="muted">Enter any other required government charges shown on the paperwork.</p>
+</div>                                                                                           
 
 <div className="worksheetField">
   <Field label="Trade-in value ($)" id="ws-trade-value" value={data.tradeValue} onChange={update("tradeValue")} />
