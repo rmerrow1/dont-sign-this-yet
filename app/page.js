@@ -215,7 +215,19 @@ const aprGuidance =
           <h2>Calculate Your Deal</h2>
         <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
 
-          <Section title="🚙 Vehicle">
+          
+ <div className="beforeCalculator">
+  <strong>📋 Before you enter your numbers, get these from the dealer:</strong>
+  <ul>
+    <li>Vehicle selling price</li>
+    <li>Out-the-door price</li>
+    <li>Trade-in value and exact loan payoff</li>
+    <li>Down payment</li>
+    <li>Dealer add-ons and fees</li>
+    <li>APR and loan term</li>
+    <li>Monthly payment</li>
+  </ul>
+</div> <Section title="🚙 Vehicle">
             <div className="formGrid">
               <div className="field">
                 <label>Vehicle condition</label>
