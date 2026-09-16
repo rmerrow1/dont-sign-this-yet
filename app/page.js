@@ -557,7 +557,149 @@ const aprGuidance =
   </main>;
 }
 
-function Field({ label, id, type = "number", value, onChange, children }) {
+
+function DealWorksheet() {
+  const [data, setData] = useState({
+    price: "",
+    tradeValue: "",
+    tradeOwed: "",
+    down: "",
+    addons: "",
+    fees: "",
+    apr: "",
+    term: "",
+    payment: ""
+  });
+
+  const update = (key) => (value) => {
+    setData(prev => ({ ...prev, [key]: value }));
+  };
+
+  const price = Number(data.price) || 0;
+  const tradeValue = Number(data.tradeValue) || 0;
+  const tradeOwed = Number(data.tradeOwed) || 0;
+  const down = Number(data.down) || 0;
+  const addons = Number(data.addons) || 0;
+  const fees = Number(data.fees) || 0;
+  const apr = Number(data.apr) || 0;
+  const term = Number(data.term) || 0;
+  const payment = Number(data.payment) || 0;
+
+  const negativeEquity = Math.max(0, tradeOwed - tradeValue);
+  const estimatedFinanced = Math.max(
+    0,
+    price + addons + fees + negativeEquity - down
+  );
+
+  const estimatedPayment =
+    apr > 0 && term > 0 && estimatedFinanced > 0
+      ? estimatedFinanced *
+        (apr / 1200) /
+        (1 - Math.pow(1 + apr / 1200, -term))
+      : 0;
+
+  const checks = [];
+
+  if (price > 0 && addons > price * 0.15) {
+    checks.push("Dealer add-ons are more than 15% of the vehicle price.");
+  }
+
+  if (price > 0 && negativeEquity >= price * 0.25) {
+    checks.push("Negative equity is at least 25% of the vehicle price.");
+  }
+
+  if (apr > 0 && apr >= 15) {
+    checks.push("The APR is high enough to warrant comparing another financing offer.");
+  }
+
+  if (term >= 84) {
+    checks.push("The loan term is 84 months or longer.");
+  }
+
+  if (payment > 0 && estimatedPayment > 0) {
+    const difference = Math.abs(payment - estimatedPayment);
+    if (difference > 25) {
+      checks.push(
+        `The stated payment differs from the estimated payment by about ${money(difference)}.`
+      );
+    }
+  }
+
+  const hasNumbers =
+    price > 0 ||
+    tradeValue > 0 ||
+    tradeOwed > 0 ||
+    down > 0 ||
+    addons > 0 ||
+    fees > 0 ||
+    apr > 0 ||
+    term > 0 ||
+    payment > 0;
+
+  return (
+    <section className="card info" id="worksheet">
+      <h2>📋 Deal Worksheet</h2>
+      <p>
+        Enter the numbers from the dealer's worksheet or buyer's order.
+        This tool checks the math and highlights numbers worth reviewing.
+      </p>
+
+      <div className="grid">
+        <Field label="Vehicle price ($)" id="ws-price" value={data.price} onChange={update("price")} />
+        <Field label="Trade-in value ($)" id="ws-trade-value" value={data.tradeValue} onChange={update("tradeValue")} />
+        <Field label="Old loan payoff ($)" id="ws-trade-owed" value={data.tradeOwed} onChange={update("tradeOwed")} />
+        <Field label="Down payment ($)" id="ws-down" value={data.down} onChange={update("down")} />
+        <Field label="Dealer add-ons ($)" id="ws-addons" value={data.addons} onChange={update("addons")} />
+        <Field label="Dealer fees ($)" id="ws-fees" value={data.fees} onChange={update("fees")} />
+        <Field label="APR (%)" id="ws-apr" value={data.apr} onChange={update("apr")} />
+        <Field label="Loan term (months)" id="ws-term" value={data.term} onChange={update("term")} />
+        <Field label="Stated monthly payment ($)" id="ws-payment" value={data.payment} onChange={update("payment")} />
+      </div>
+
+      {hasNumbers && (
+        <div className="next">
+          <h3>Numbers to double-check</h3>
+
+          {negativeEquity > 0 && (
+            <p>
+              <strong>Negative equity:</strong> {money(negativeEquity)}
+            </p>
+          )}
+
+          {estimatedFinanced > 0 && (
+            <p>
+              <strong>Estimated amount financed:</strong> {money(estimatedFinanced)}
+            </p>
+          )}
+
+          {estimatedPayment > 0 && (
+            <p>
+              <strong>Estimated monthly payment:</strong> {money(estimatedPayment)}
+            </p>
+          )}
+
+          {checks.length > 0 ? (
+            <ul>
+              {checks.map((check, i) => (
+                <li key={i}>{check}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="muted">
+              No specific calculation warning was triggered by the numbers entered.
+              Review the complete paperwork before signing.
+            </p>
+          )}
+        </div>
+      )}
+
+      <p className="muted">
+        This worksheet is a math and review tool. It does not determine whether
+        a deal is good or bad and does not replace reviewing your contract.
+      </p>
+    </section>
+  );
+}function Field({ label, id, type = "number", value, onChange, children }) {
   return (
     <div className="field">
       <label htmlFor={id}>{label}</label>
