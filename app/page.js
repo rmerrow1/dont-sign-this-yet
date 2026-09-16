@@ -79,7 +79,7 @@ const neg = Math.max(0,(Number(form.tradeOwed)||0)-(Number(form.tradeValue)||0))
 const priceDiff = ((price-market)/market)*100;
 const feePct = fees/Math.max(price,1)*100;
 const transportRatio = (result.monthly+insurance+fuel+maintenance)/income*100;
-const reserveMonths = Math.max(0,(Number(form.savings)||0)-(Number(form.down)||0))/expenses;
+const reserveMonths = form.savings !== "" ? Math.max(0,(Number(form.savings)||0)-(Number(form.down)||0))/expenses : null;
 
 const scoreReasons = [];
 
