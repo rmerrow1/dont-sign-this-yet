@@ -633,6 +633,17 @@ outTheDoor: "",
   const down = Number(data.down) || 0;
   const addons = Number(data.addons) || 0;
   const fees = Number(data.fees) || 0;
+  const taxes = Number(data.taxes) || 0;
+const titleRegistration = Number(data.titleRegistration) || 0;
+const otherGovernmentFees = Number(data.otherGovernmentFees) || 0;
+
+const calculatedOutTheDoor =
+  price +
+  taxes +
+  titleRegistration +
+  otherGovernmentFees +
+  addons +
+  fees;
   const apr = Number(data.apr) || 0;
   const term = Number(data.term) || 0;
   const payment = Number(data.payment) || 0;
