@@ -802,7 +802,11 @@ const calculatedOutTheDoor =
               <strong>Estimated amount financed:</strong> {money(estimatedFinanced)}
             </p>
           )}
-
+{calculatedOutTheDoor > 0 && (
+  <p>
+    <strong>Calculated out-the-door price:</strong> {money(calculatedOutTheDoor)}
+  </p>
+)}
           {estimatedPayment > 0 && (
             <p>
               <strong>Estimated monthly payment:</strong> {money(estimatedPayment)}
