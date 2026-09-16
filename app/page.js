@@ -691,7 +691,8 @@ function DealWorksheet({ onUseInCalculator }) {
         This tool checks the math and highlights numbers worth reviewing.
       </p>
 
- <div className="worksheetField">
+<div className="grid">
+<div className="worksheetField">
   <Field label="Vehicle price ($)" id="ws-price" value={data.price} onChange={update("price")} />
   <p className="muted">Usually listed as the vehicle selling price or cash price.</p>
 </div>
