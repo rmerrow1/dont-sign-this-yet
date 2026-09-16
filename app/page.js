@@ -536,7 +536,7 @@ const aprGuidance =
     ["5️⃣","Which add-ons are optional?","Ask what each add-on costs and whether you can decline it."],
     ["6️⃣","Can I take the paperwork home to review?","You should be able to review the final numbers before signing."]
   ]}
-/> <section className="card info" id="about">
+/><DealWorksheet /> <section className="card info" id="about">
         <h2>About Don't Sign This Yet</h2>
         <p><b>We're not here to tell you what to do. We're here to help you understand what you're agreeing to.</b></p>
         <p className="muted">
