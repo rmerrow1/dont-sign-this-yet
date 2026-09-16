@@ -708,7 +708,9 @@ function DealWorksheet({ onUseInCalculator }) {
 
 <div className="worksheetField">
   <Field label="Out-the-door price ($)" id="ws-otd" value={data.outTheDoor} onChange={update("outTheDoor")} />
-  <p className="muted">The complete price you would pay, including taxes, title, registration, fees and add-ons.</p>
+  <p className="muted">
+  This is the total price you're being asked to pay before financing, including the vehicle price, taxes, title/registration, dealer fees and add-ons.
+</p>
 </div> 
 
 <div className="worksheetField">
