@@ -137,7 +137,16 @@ if(result.score < 70 && scoreReasons.length === 0){
   );
 }
 
-const marketConfidence =
+const aprGuidance =
+  result.aprDiff >= 5
+    ? `Your APR is ${result.aprDiff.toFixed(1)} percentage points above the estimated benchmark. Compare offers from another lender before signing.`
+    : result.aprDiff >= 3
+    ? `Your APR is ${result.aprDiff.toFixed(1)} percentage points above the estimated benchmark. Consider comparing another lender's offer.`
+    : result.aprDiff >= 1
+    ? `Your APR is ${result.aprDiff.toFixed(1)} percentage points above the estimated benchmark. Comparing another offer may help you find a lower rate.`
+    : `Your APR is close to the estimated benchmark for this credit profile.`;
+
+  const marketConfidence =
   marketSource === "multiple"
     ? "Stronger estimate — you compared multiple valuation sources."
     : marketSource === "unsure"
@@ -453,6 +462,7 @@ const marketConfidence =
   <div className="next">
     <h3>Why this score</h3>
     <p className="muted"><strong>Market value confidence:</strong> {marketConfidence}</p><ul>
+              <p className="muted"><strong>Financing guidance:</strong> {aprGuidance}</p>
       {scoreReasons.slice(0,4).map((reason,i)=><li key={i}>{reason}</li>)}
     </ul>
 
