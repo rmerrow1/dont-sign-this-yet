@@ -523,7 +523,20 @@ const aprGuidance =
         ]}
       />
 
-      <section className="card info" id="about">
+      
+          
+         <InfoSection
+  id="questions"
+  title="🗣️ Questions to Ask at the Dealership"
+  items={[
+    ["1️⃣","What is the total out-the-door price?","Ask for the complete price, including taxes, fees, add-ons, and other charges."],
+    ["2️⃣","What is my APR and loan term?","Ask for the exact interest rate and number of months, not just the monthly payment."],
+    ["3️⃣","How much will I pay in interest?","Ask for the total finance charge and total amount you will pay over the life of the loan."],
+    ["4️⃣","What are you giving me for my trade?","Ask for the trade-in value and the exact payoff amount on your old loan."],
+    ["5️⃣","Which add-ons are optional?","Ask what each add-on costs and whether you can decline it."],
+    ["6️⃣","Can I take the paperwork home to review?","You should be able to review the final numbers before signing."]
+  ]}
+/> <section className="card info" id="about">
         <h2>About Don't Sign This Yet</h2>
         <p><b>We're not here to tell you what to do. We're here to help you understand what you're agreeing to.</b></p>
         <p className="muted">
