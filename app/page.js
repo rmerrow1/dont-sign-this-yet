@@ -645,15 +645,50 @@ function DealWorksheet() {
       </p>
 
       <div className="grid">
-        <Field label="Vehicle price ($)" id="ws-price" value={data.price} onChange={update("price")} />
-        <Field label="Trade-in value ($)" id="ws-trade-value" value={data.tradeValue} onChange={update("tradeValue")} />
-        <Field label="Old loan payoff ($)" id="ws-trade-owed" value={data.tradeOwed} onChange={update("tradeOwed")} />
-        <Field label="Down payment ($)" id="ws-down" value={data.down} onChange={update("down")} />
-        <Field label="Dealer add-ons ($)" id="ws-addons" value={data.addons} onChange={update("addons")} />
-        <Field label="Dealer fees ($)" id="ws-fees" value={data.fees} onChange={update("fees")} />
-        <Field label="APR (%)" id="ws-apr" value={data.apr} onChange={update("apr")} />
-        <Field label="Loan term (months)" id="ws-term" value={data.term} onChange={update("term")} />
-        <Field label="Stated monthly payment ($)" id="ws-payment" value={data.payment} onChange={update("payment")} />
+       <div className="worksheetField">
+  <Field label="Vehicle price ($)" id="ws-price" value={data.price} onChange={update("price")} />
+  <p className="muted">Usually listed as the vehicle selling price or cash price.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Trade-in value ($)" id="ws-trade-value" value={data.tradeValue} onChange={update("tradeValue")} />
+  <p className="muted">Look for the amount the dealer is giving you for your trade.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Old loan payoff ($)" id="ws-trade-owed" value={data.tradeOwed} onChange={update("tradeOwed")} />
+  <p className="muted">Find the exact payoff amount for your existing vehicle loan.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Down payment ($)" id="ws-down" value={data.down} onChange={update("down")} />
+  <p className="muted">Enter the cash you're putting toward the purchase.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Dealer add-ons ($)" id="ws-addons" value={data.addons} onChange={update("addons")} />
+  <p className="muted">Look for optional products or services added to the deal.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Dealer fees ($)" id="ws-fees" value={data.fees} onChange={update("fees")} />
+  <p className="muted">Check the buyer's order for dealer or processing fees.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="APR (%)" id="ws-apr" value={data.apr} onChange={update("apr")} />
+  <p className="muted">Find the annual percentage rate on the financing disclosure.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Loan term (months)" id="ws-term" value={data.term} onChange={update("term")} />
+  <p className="muted">Enter the number of monthly payments, such as 60 or 72.</p>
+</div>
+
+<div className="worksheetField">
+  <Field label="Stated monthly payment ($)" id="ws-payment" value={data.payment} onChange={update("payment")} />
+  <p className="muted">Enter the monthly payment shown on the dealer's paperwork.</p>
+</div>
       </div>
 
       {hasNumbers && (
