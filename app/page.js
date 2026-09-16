@@ -19,6 +19,28 @@ export default function Home() {
   const [attempted,setAttempted] = useState(false);
   const result = useMemo(()=>calculateDealScore(form),[form]);
 
+  const useWorksheet = (worksheet) => {
+  setForm(prev => ({
+    ...prev,
+    price: worksheet.price,
+    apr: worksheet.apr,
+    term: worksheet.term || 48,
+    down: worksheet.down,
+    tradeValue: worksheet.tradeValue,
+    tradeOwed: worksheet.tradeOwed,
+    addons: worksheet.addons,
+    fees: worksheet.fees
+  }));
+
+  setCalculated(false);
+  setAttempted(false);
+
+  document.getElementById("calculator")?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+};
+
   const validation = useMemo(() => {
     const errors = [];
     const required = [
@@ -536,7 +558,7 @@ const aprGuidance =
     ["5️⃣","Which add-ons are optional?","Ask what each add-on costs and whether you can decline it."],
     ["6️⃣","Can I take the paperwork home to review?","You should be able to review the final numbers before signing."]
   ]}
-/><DealWorksheet /> <section className="card info" id="about">
+/><DealWorksheet onUseInCalculator={useWorksheet} /> <section className="card info" id="about">
         <h2>About Don't Sign This Yet</h2>
         <p><b>We're not here to tell you what to do. We're here to help you understand what you're agreeing to.</b></p>
         <p className="muted">
@@ -558,7 +580,7 @@ const aprGuidance =
 }
 
 
-function DealWorksheet() {
+function DealWorksheet({ onUseInCalculator }) {
   const [data, setData] = useState({
     price: "",
     tradeValue: "",
@@ -734,7 +756,15 @@ function DealWorksheet() {
         </div>
       )}
 
-      <p className="muted">
+     {hasNumbers && (
+  <button
+    type="button"
+    className="primary"
+    onClick={() => onUseInCalculator(data)}
+  >
+    Use These Numbers in Calculator
+  </button>
+)} <p className="muted">
         This worksheet is a math and review tool. It does not determine whether
         a deal is good or bad and does not replace reviewing your contract.
       </p>
