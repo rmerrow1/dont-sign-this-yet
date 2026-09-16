@@ -411,12 +411,19 @@ const aprGuidance =
 </div>
           </Section>
 
-          <Section title="📋 Deal extras">
-            <div className="formGrid">
-              <Field label="Dealer add-ons ($)" id="addons" value={form["addons"]} onChange={value => update("addons", value)}/>
-              <Field label="Dealer fees ($)" id="fees" value={form["fees"]} onChange={value => update("fees", value)}/>
-            </div>
-          </Section>
+         <Section title="📋 Deal extras">
+  <div className="formGrid">
+    <div>
+      <Field label="Dealer add-ons ($)" id="addons" value={form["addons"]} onChange={value => update("addons", value)}/>
+      <p className="muted">Optional products or services added to the deal. Ask which ones you can decline.</p>
+    </div>
+
+    <div>
+      <Field label="Dealer fees ($)" id="fees" value={form["fees"]} onChange={value => update("fees", value)}/>
+      <p className="muted">Check the buyer's order to see exactly what each fee is for.</p>
+    </div>
+  </div>
+</Section>
 
           <Section title="👤 Your affordability picture">
             <div className="formGrid">
