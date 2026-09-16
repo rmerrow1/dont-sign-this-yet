@@ -191,7 +191,7 @@ const aprGuidance =
 
         <section className="card formCard">
           <h2>Calculate Your Deal</h2>
-          <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice.</p>
+        <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
 
           <Section title="🚙 Vehicle">
             <div className="formGrid">
