@@ -203,8 +203,8 @@ const aprGuidance =
                 </div>
               </div>
 
-              <Field label="Vehicle price ($)" id="price" value={form["price"]} onChange={value => update("price", value)}/>
-              <Field label="Estimated fair market value ($)" id="market" value={form["market"]} onChange={value => update("market", value)}/>
+             <Field label="Vehicle price ($) *" id="price" value={form["price"]} onChange={value => update("price", value)}/>
+            <Field label="Estimated fair market value ($) *" id="market" value={form["market"]} onChange={value => update("market", value)}/>
             </div>
   <div className="marketGuide">
   <strong>💡 Need help estimating market value?</strong>
