@@ -389,7 +389,7 @@ const aprGuidance =
             </div>
           </Section>
 
-          <button className="calculate" onClick={calculate} disabled={validation.length>0}>
+          <button className="calculate" onClick={calculate}>
             Calculate My Deal Score →
           </button>
         </section>
