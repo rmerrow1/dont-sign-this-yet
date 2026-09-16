@@ -125,7 +125,7 @@ if(transportRatio > 25){
   );
 }
 
-if(reserveMonths < 1){
+if(reserveMonths !== null && reserveMonths < 1){
   scoreReasons.push(
     "After the down payment, your listed savings provide less than one month of essential expenses. Consider how much cash you want to keep available after buying the vehicle."
   );
