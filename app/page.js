@@ -515,9 +515,11 @@ const aprGuidance =
         id="tips"
         title="💡 Before You Sign"
         items={[
-          ["1️⃣","Get the out-the-door price","Separate the vehicle price from taxes, fees, add-ons, and financing."],
-          ["2️⃣","Don't negotiate only payment","A lower payment can be created by extending the loan."],
-          ["3️⃣","Compare financing","An outside loan quote gives you a useful benchmark."]
+         ["1️⃣","Get the out-the-door price","Ask for the complete price of the vehicle, including taxes, fees, add-ons, and other charges."],
+["2️⃣","Check the APR and loan term","Look at the interest rate and length of the loan. A lower monthly payment can come from a longer loan."],
+["3️⃣","Check the trade-in and payoff","Make sure the trade-in value, loan payoff, and any negative equity are clearly shown."],
+["4️⃣","Review every add-on and fee","Ask what each add-on or fee is for, how much it costs, and whether it is optional."],
+["5️⃣","Read the final paperwork before signing","Make sure the numbers in the final buyer's order and financing contract match what you agreed to."]
         ]}
       />
 
