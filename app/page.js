@@ -470,6 +470,17 @@ const aprGuidance =
     <ul>
       {nextSteps.map((s,i)=><li key={i}>{s}</li>)}
     </ul>
+                     <details className="scoreMethod">
+  <summary>How is my score calculated?</summary>
+  <ul>
+    <li><strong>Vehicle Deal — up to 25 points:</strong> vehicle price compared with estimated market value.</li>
+    <li><strong>Financing — up to 25 points:</strong> APR, loan term and estimated interest.</li>
+    <li><strong>Affordability — up to 25 points:</strong> payment and transportation costs compared with take-home pay.</li>
+    <li><strong>Deal Structure — up to 25 points:</strong> trade-in, negative equity, dealer add-ons and fees.</li>
+    <li><strong>Important:</strong> certain serious risks can limit the maximum score.</li>
+  </ul>
+  <p className="muted">This score is a decision-support tool based on the numbers you entered. It is not a guarantee that a deal is good or bad.</p>
+</details>
   </div>
 }
           </section>
