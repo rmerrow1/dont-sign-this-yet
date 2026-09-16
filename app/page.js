@@ -679,9 +679,10 @@ function DealWorksheet({ onUseInCalculator }) {
   }
 }
 
-  const hasNumbers =
-    price > 0 ||
-    tradeValue > 0 ||
+ const hasNumbers =
+  price > 0 ||
+  outTheDoor > 0 ||
+  tradeValue > 0 ||
     tradeOwed > 0 ||
     down > 0 ||
     addons > 0 ||
