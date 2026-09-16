@@ -753,6 +753,11 @@ function DealWorksheet({ onUseInCalculator }) {
       {hasNumbers && (
         <div className="next">
           <h3>Numbers to double-check</h3>
+       {Number(data.outTheDoor) > 0 && (
+  <p>
+    <strong>Out-the-door price:</strong> {money(Number(data.outTheDoor))}
+  </p>
+)}
 
           {negativeEquity > 0 && (
             <p>
