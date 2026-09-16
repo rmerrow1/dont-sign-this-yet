@@ -181,7 +181,7 @@ const aprGuidance =
     <section className="hero">
       <div>
         <div className="eyebrow">UNDERSTAND THE NUMBERS BEFORE YOU COMMIT</div>
-        <h1>Before you sign, make sure the deal makes sense.</h1>
+        <h1>Know the numbers before you sign.</h1>
         <p>Enter the numbers from your vehicle deal. We'll analyze price, financing, affordability, and deal structure.</p>
       </div>
     </section>
