@@ -608,7 +608,10 @@ const aprGuidance =
 function DealWorksheet({ onUseInCalculator }) {
  const [data, setData] = useState({
   price: "",
-  outTheDoor: "",
+taxes: "",
+titleRegistration: "",
+otherGovernmentFees: "",
+outTheDoor: "",
   tradeValue: "",
     tradeOwed: "",
     down: "",
