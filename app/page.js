@@ -476,7 +476,17 @@ const aprGuidance =
         </aside>
       </div>
 
-      <InfoSection
+     <InfoSection
+  id="how-it-works"
+  title="🧭 How It Works"
+  subtitle="A simple way to understand the numbers before you commit."
+  items={[
+    ["1️⃣","Enter your deal numbers","Use the numbers from the dealer's worksheet or your best estimates."],
+    ["2️⃣","We analyze the deal","The calculator looks at vehicle price, financing, affordability and deal structure."],
+    ["3️⃣","Review the score","See what's driving the score, along with specific things to review before signing."],
+    ["4️⃣","Make your own decision","Use the information to ask better questions and decide what you're comfortable with."]
+  ]}
+/> <InfoSection
         id="learn"
         title="📚 Learn the Numbers"
         subtitle="The score is easier to understand when you know what it is measuring."
