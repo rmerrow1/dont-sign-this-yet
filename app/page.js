@@ -239,6 +239,12 @@ const aprGuidance =
 
              <Field label="Vehicle price ($) *" id="price" value={form["price"]} onChange={value => update("price", value)}/>
             <Field label="Estimated fair market value ($) *" id="market" value={form["market"]} onChange={value => update("market", value)}/>
+  <p className="muted">
+  <strong>Important:</strong> Vehicle price is the selling price of the vehicle.
+  It is not necessarily the same as the out-the-door price. Ask the dealer for
+  the complete out-the-door price, including taxes, title, registration, fees
+  and add-ons, before signing.
+</p>
             </div>
   <div className="marketGuide">
   <strong>💡 Need help estimating market value?</strong>
