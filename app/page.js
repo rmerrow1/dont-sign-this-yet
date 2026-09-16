@@ -616,14 +616,20 @@ function DealWorksheet() {
     checks.push("The loan term is 84 months or longer.");
   }
 
-  if (payment > 0 && estimatedPayment > 0) {
-    const difference = Math.abs(payment - estimatedPayment);
-    if (difference > 25) {
-      checks.push(
-        `The stated payment differs from the estimated payment by about ${money(difference)}.`
-      );
-    }
+ if (payment > 0 && estimatedPayment > 0) {
+  const difference = Math.abs(payment - estimatedPayment);
+
+  if (difference > 25) {
+    const direction =
+      payment < estimatedPayment
+        ? "lower"
+        : "higher";
+
+    checks.push(
+      `The stated payment is about ${money(difference)} ${direction} than our estimate. Ask the dealer to explain the difference and verify the amount financed, APR, term, and any credits or fees.`
+    );
   }
+}
 
   const hasNumbers =
     price > 0 ||
