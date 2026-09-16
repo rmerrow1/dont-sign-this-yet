@@ -599,9 +599,10 @@ const aprGuidance =
 
 
 function DealWorksheet({ onUseInCalculator }) {
-  const [data, setData] = useState({
-    price: "",
-    tradeValue: "",
+ const [data, setData] = useState({
+  price: "",
+  outTheDoor: "",
+  tradeValue: "",
     tradeOwed: "",
     down: "",
     addons: "",
@@ -690,11 +691,15 @@ function DealWorksheet({ onUseInCalculator }) {
         This tool checks the math and highlights numbers worth reviewing.
       </p>
 
-      <div className="grid">
-       <div className="worksheetField">
+ <div className="worksheetField">
   <Field label="Vehicle price ($)" id="ws-price" value={data.price} onChange={update("price")} />
   <p className="muted">Usually listed as the vehicle selling price or cash price.</p>
 </div>
+
+<div className="worksheetField">
+  <Field label="Out-the-door price ($)" id="ws-otd" value={data.outTheDoor} onChange={update("outTheDoor")} />
+  <p className="muted">The complete price you would pay, including taxes, title, registration, fees and add-ons.</p>
+</div> 
 
 <div className="worksheetField">
   <Field label="Trade-in value ($)" id="ws-trade-value" value={data.tradeValue} onChange={update("tradeValue")} />
