@@ -624,6 +624,7 @@ function DealWorksheet({ onUseInCalculator }) {
   };
 
   const price = Number(data.price) || 0;
+  const outTheDoor = Number(data.outTheDoor) || 0;
   const tradeValue = Number(data.tradeValue) || 0;
   const tradeOwed = Number(data.tradeOwed) || 0;
   const down = Number(data.down) || 0;
