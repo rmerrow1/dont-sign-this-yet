@@ -537,7 +537,7 @@ const aprGuidance =
      <InfoSection
   id="how-it-works"
   title="🧭 How It Works"
-  subtitle="A simple way to understand the numbers before you commit."
+  
   items={[
     ["1️⃣","Enter your deal numbers","Use the numbers from the dealer's worksheet or your best estimates."],
     ["2️⃣","We analyze the deal","The calculator looks at vehicle price, financing, affordability and deal structure."],
