@@ -8,10 +8,22 @@
 .resultsData.stale .staleNotice{display:block;margin:0 0 12px;padding:10px 12px;border:1px solid #d8c47a;border-radius:10px;background:#fff9df;color:#5e4c00;font-size:.88rem;font-weight:600}
 .formGrid>.muted{grid-column:1/-1}
 @media (min-width: 769px){html{scroll-padding-top:100px}}
-.choice.active {
-  background: #1769aa;
-  color: #fff;
-  border-color: #1769aa;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.25);
-  transform: translateY(1px);
+.choiceRow{display:flex;gap:8px}
+.choice{
+  flex:1;
+  padding:11px;
+  border:2px solid #cfdbe7;
+  background:#fff;
+  border-radius:10px;
+  font-weight:800;
+  color:#607084;
+  cursor:pointer;
 }
+.choice.active{
+  background:#1769aa;
+  color:#fff;
+  border-color:#1769aa;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.25);
+  transform:translateY(1px);
+}
+
