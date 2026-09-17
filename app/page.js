@@ -644,6 +644,7 @@ const calculatedOutTheDoor =
   otherGovernmentFees +
   addons +
   fees;
+  const outTheDoorDifference = outTheDoor - calculatedOutTheDoor;
   const apr = Number(data.apr) || 0;
   const term = Number(data.term) || 0;
   const payment = Number(data.payment) || 0;
