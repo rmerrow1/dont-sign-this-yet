@@ -76,10 +76,11 @@ setWorksheetTransferred(true);
 
     return errors;
   }, [form]);
+  const scoreReady = calculated && validation.length === 0;
 
   const update=(key,value)=>{
     setForm(f=>({...f,[key]:value}));
-    setCalculated(false);
+  
   };
 
   const calculate=()=>{
@@ -456,25 +457,23 @@ const aprGuidance =
               <span className="eyebrow dark">YOUR DEAL SCORE</span>
      
             </div>
-
-            <div className={`scoreRing ${calculated?result.color:"neutral"}`}>
+        className={`scoreRing ${scoreReady?result.color:"neutral"}`}
               <div>
-                <div className="score">{calculated?result.score:"—"}</div>
+                <div className="score">{scoreReady?result.score:"—"}</div>
                 <div className="out">out of 100</div>
               </div>
             </div>
 
         
-
-           <div className="verdict">{calculated?result.verdict:"SCORE NEEDS UPDATING"}</div>
+<div className="verdict">{scoreReady?result.verdict:"SCORE NEEDS UPDATING"}</div>
 
 <p className="muted">
-  {calculated
+  {scoreReady
     ?"Review the strengths and concerns below before making your decision."
     :"Complete the required fields below to calculate your score."}
 </p>
 
-{!calculated && (
+{!scoreReady && (
   <div className="missingFields">
     <strong>Still needed:</strong>
     <ul>
@@ -494,10 +493,8 @@ const aprGuidance =
               </div>
             }
 
-        <div className={calculated ? "resultsData" : "resultsData stale"} hidden={!calculated}>
-              <div className="staleNotice">
-                Your deal changed. The figures below are from the last calculation.
-              </div>
+       <div className={scoreReady ? "resultsData" : "resultsData stale"} hidden={!scoreReady}>
+           
 
               <div className="kpis">
                 <Kpi label="Monthly payment" value={money(result.monthly)}/>
@@ -517,7 +514,7 @@ const aprGuidance =
               </div>
             </div>
 
-            {calculated && result.caps.length>0 &&
+           {scoreReady && result.caps.length>0 &&
               <div className="flags">
                 <h3>🚨 Critical Red Flags</h3>
                 <p>Base score: <b>{result.base}/100</b>. The final score was capped because certain risks should not be canceled out by strengths elsewhere.</p>
@@ -529,7 +526,7 @@ const aprGuidance =
               </div>
             }
 
-            {calculated &&
+    {scoreReady &&
   <div className="next">
     <h3>Why this score</h3>
     <p className="muted"><strong>Market value confidence:</strong> {marketConfidence}</p><ul>
