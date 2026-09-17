@@ -457,7 +457,7 @@ const aprGuidance =
               <span className="eyebrow dark">YOUR DEAL SCORE</span>
      
             </div>
-        className={`scoreRing ${scoreReady?result.color:"neutral"}`}
+       <div className={`scoreRing ${scoreReady?result.color:"neutral"}`}>
               <div>
                 <div className="score">{scoreReady?result.score:"—"}</div>
                 <div className="out">out of 100</div>
