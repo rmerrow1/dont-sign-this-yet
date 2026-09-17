@@ -5,7 +5,7 @@ import { calculateDealScore } from "../lib/scoring";
 import "./globals.css";
 
 const initial = {
-  condition:"new", price:"", market:"", apr:"", term:48, down:"", credit:"prime",
+  condition:"new", price:"", market:"", apr:"", term:"", down:"", credit:"prime",
   tradeValue:"", tradeOwed:"", addons:"", fees:"", income:"", savings:"",
   expenses:"", insurance:"", fuel:"", maintenance:""
 };
@@ -25,7 +25,7 @@ export default function Home() {
     ...prev,
     price: worksheet.price,
     apr: worksheet.apr,
-    term: worksheet.term || 48,
+  term: worksheet.term,
     down: worksheet.down,
     tradeValue: worksheet.tradeValue,
     tradeOwed: worksheet.tradeOwed,
