@@ -482,6 +482,7 @@ const aprGuidance =
       {!(Number(form.market) > 0) && <li>Estimated fair market value</li>}
       {!(Number(form.income) > 0) && <li>Monthly take-home pay</li>}
       {!(Number(form.expenses) > 0) && <li>Monthly essential expenses</li>}
+       {(!Number(form.term) > 0) && <li>Loan term</li>}
         {!(Number(form.apr) > 0) && <li>APR</li>}
     </ul>
   </div>
