@@ -663,7 +663,12 @@ const calculatedOutTheDoor =
       : 0;
 
   const checks = [];
-
+if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference) > 25) {
+  const direction = outTheDoorDifference > 0 ? "higher" : "lower";
+  checks.push(
+    `The stated out-the-door price is ${money(Math.abs(outTheDoorDifference))} ${direction} than the calculated amount. Ask the dealer to explain the difference and verify the taxes, title/registration, fees, and add-ons.`
+  );
+}
   if (price > 0 && addons > price * 0.15) {
     checks.push("Dealer add-ons are more than 15% of the vehicle price.");
   }
