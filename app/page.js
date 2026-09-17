@@ -202,7 +202,7 @@ const aprGuidance =
 
     <section className="hero">
       <div>
-        <div className="eyebrow">UNDERSTAND THE NUMBERS BEFORE YOU COMMIT</div>
+     
         <h1>Know the numbers before you sign.</h1>
     <p>Enter the numbers from your vehicle deal. We'll show you what's driving the score—and what to look at before you sign.</p>
       </div>
