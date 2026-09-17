@@ -818,7 +818,7 @@ if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference)
 
           {estimatedFinanced > 0 && (
             <p>
-              <strong>Estimated amount financed:</strong> {money(estimatedFinanced)}
+            <div>Vehicle price before financing adjustments: {money(estimatedFinanced)}</div> 
             </p>
           )}
 {calculatedOutTheDoor > 0 && (
