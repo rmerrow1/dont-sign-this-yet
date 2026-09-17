@@ -461,13 +461,27 @@ const aprGuidance =
               </div>
             </div>
 
-            <div className="verdict">{calculated?result.verdict:"SCORE NEEDS UPDATING"}</div>
+        
 
-            <p className="muted">
-              {calculated
-                ?"Review the strengths and concerns below before making your decision."
-                :"Enter your deal numbers, then tap Calculate My Deal Score to see your score."}
-            </p>
+           <div className="verdict">{calculated?result.verdict:"SCORE NEEDS UPDATING"}</div>
+
+<p className="muted">
+  {calculated
+    ?"Review the strengths and concerns below before making your decision."
+    :"Complete the required fields below to calculate your score."}
+</p>
+
+{!calculated && (
+  <div className="missingFields">
+    <strong>Still needed:</strong>
+    <ul>
+      {!(Number(form.price) > 0) && <li>Vehicle price</li>}
+      {!(Number(form.market) > 0) && <li>Estimated fair market value</li>}
+      {!(Number(form.income) > 0) && <li>Monthly take-home pay</li>}
+      {!(Number(form.expenses) > 0) && <li>Monthly essential expenses</li>}
+    </ul>
+  </div>
+)}
 
             {attempted && validation.length>0 &&
               <div className="validation">
