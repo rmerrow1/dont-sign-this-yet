@@ -329,7 +329,8 @@ const aprGuidance =
 
               <div className="field">
                 <label>Loan term</label>
-                <select value={form.term} onChange={e=>update("term",Number(e.target.value))}>
+             <select value={form.term} onChange={e=>update("term",Number(e.target.value))}>
+             <option value="" disabled>Select loan term</option>
                   {[36,48,60,72,84,96].map(x=><option key={x}>{x}</option>)}
                 </select>
               </div>
