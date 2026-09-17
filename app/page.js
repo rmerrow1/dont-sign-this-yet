@@ -52,7 +52,7 @@ setWorksheetTransferred(true);
 ["apr", "APR", "greater than $0"]
     ];
     const optional = [
-     const optional = [
+     
   ["down", "down payment"], ["tradeValue", "trade-in value"],
       ["tradeOwed", "amount still owed"], ["addons", "dealer add-ons"], ["fees", "dealer fees"],
       ["savings", "liquid savings"], ["insurance", "monthly insurance"], ["fuel", "monthly fuel"],
