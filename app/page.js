@@ -23,6 +23,7 @@ export default function Home() {
   const useWorksheet = (worksheet) => {
   setForm(prev => ({
     ...prev,
+  condition: worksheet.condition,
     price: worksheet.price,
     apr: worksheet.apr,
   term: worksheet.term,
@@ -59,7 +60,9 @@ setWorksheetTransferred(true);
       ["savings", "liquid savings"], ["insurance", "monthly insurance"], ["fuel", "monthly fuel"],
       ["maintenance", "monthly maintenance reserve"]
     ];
-
+if (!form.condition) {
+  errors.push("Select whether the vehicle is new or used.");
+}
     for (const [key, label, rule] of required) {
       const value = Number(form[key]);
       if (!String(form[key] ?? "").trim() || !Number.isFinite(value) || value <= 0) {
@@ -620,6 +623,7 @@ const aprGuidance =
 
 function DealWorksheet({ onUseInCalculator }) {
  const [data, setData] = useState({
+   condition: "",
   price: "",
 taxes: "",
 titleRegistration: "",
@@ -733,8 +737,30 @@ if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference)
         This tool checks the math and highlights numbers worth reviewing.
       </p>
 
-<div className="grid">
 <div className="worksheetField">
+  <label>Vehicle condition</label>
+  <div className="choiceRow">
+    <button
+      type="button"
+      className={data.condition === "new" ? "choice active" : "choice"}
+      onClick={() => update("condition")("new")}
+    >
+      New
+    </button>
+    <button
+      type="button"
+      className={data.condition === "used" ? "choice active" : "choice"}
+      onClick={() => update("condition")("used")}
+    >
+      Used
+    </button>
+  </div>
+</div>
+
+
+<div className="worksheetField">
+    
+  
   <Field label="Vehicle price ($)" id="ws-price" value={data.price} onChange={update("price")} />
   <p className="muted">Usually listed as the vehicle selling price or cash price.</p>
 </div>
