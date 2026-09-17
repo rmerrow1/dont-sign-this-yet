@@ -826,11 +826,17 @@ if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference)
     <strong>Calculated out-the-door price:</strong> {money(calculatedOutTheDoor)}
   </p>
 )}
-          {estimatedPayment > 0 && (
-            <p>
-              <strong>Estimated monthly payment:</strong> {money(estimatedPayment)}
-            </p>
-          )}
+         {payment > 0 && (
+  <p>
+    <strong>Stated monthly payment:</strong> {money(payment)}
+  </p>
+)}
+
+{estimatedPayment > 0 && (
+  <p>
+    <strong>Estimated monthly payment:</strong> {money(estimatedPayment)}
+  </p>
+)} 
 
           {checks.length > 0 ? (
             <ul>
