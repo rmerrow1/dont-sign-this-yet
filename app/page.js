@@ -445,7 +445,7 @@ const aprGuidance =
           <section className="card scoreCard">
             <div className="resultsTop">
               <span className="eyebrow dark">YOUR DEAL SCORE</span>
-              <span className="live">● LIVE ENGINE</span>
+     
             </div>
 
             <div className={`scoreRing ${calculated?result.color:"neutral"}`}>
