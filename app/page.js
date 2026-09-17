@@ -590,7 +590,7 @@ const aprGuidance =
       
           
          <InfoSection
-  id="questions"
+  id="tips"
   title="🗣️ Questions to Ask at the Dealership"
   items={[
     ["1️⃣","What is the total out-the-door price?","Ask for the complete price, including taxes, fees, add-ons, and other charges."],
