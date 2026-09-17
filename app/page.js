@@ -547,7 +547,7 @@ const aprGuidance =
 /> <InfoSection
         id="learn"
         title="📚 Learn the Numbers"
-        subtitle="The score is easier to understand when you know what it is measuring."
+       
         items={[
           ["%","APR","APR is the cost of borrowing. We compare it with an estimated benchmark based on vehicle condition and credit profile."],
           ["📅","Loan Term","A lower payment can hide a much longer loan and significantly more interest."],
