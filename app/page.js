@@ -825,7 +825,7 @@ if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference)
   <Field label="Stated monthly payment ($)" id="ws-payment" value={data.payment} onChange={update("payment")} />
   <p className="muted">Enter the monthly payment shown on the dealer's paperwork.</p>
 </div>
-      </div>
+    
 
       {hasNumbers && (
         <div className="next">
