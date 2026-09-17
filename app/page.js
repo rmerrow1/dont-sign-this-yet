@@ -481,6 +481,7 @@ const aprGuidance =
   <div className="missingFields">
     <strong>Still needed:</strong>
     <ul>
+  {!form.condition && <li>Vehicle condition</li>}
       {!(Number(form.price) > 0) && <li>Vehicle price</li>}
       {!(Number(form.market) > 0) && <li>Estimated fair market value</li>}
       {!(Number(form.income) > 0) && <li>Monthly take-home pay</li>}
