@@ -7,3 +7,4 @@
 .resultsData.stale{opacity:.58}
 .resultsData.stale .staleNotice{display:block;margin:0 0 12px;padding:10px 12px;border:1px solid #d8c47a;border-radius:10px;background:#fff9df;color:#5e4c00;font-size:.88rem;font-weight:600}
 .formGrid>.muted{grid-column:1/-1}
+@media (min-width: 769px){html{scroll-padding-top:100px}}
