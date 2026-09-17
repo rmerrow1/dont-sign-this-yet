@@ -17,6 +17,7 @@ export default function Home() {
   const [marketSource,setMarketSource] = useState("multiple");
   const [calculated,setCalculated] = useState(false);
   const [attempted,setAttempted] = useState(false);
+  const [worksheetTransferred,setWorksheetTransferred] = useState(false);
   const result = useMemo(()=>calculateDealScore(form),[form]);
 
   const useWorksheet = (worksheet) => {
@@ -34,7 +35,7 @@ export default function Home() {
 
   setCalculated(false);
   setAttempted(false);
-
+setWorksheetTransferred(true);
   document.getElementById("calculator")?.scrollIntoView({
     behavior: "smooth",
     block: "start"
@@ -214,7 +215,12 @@ const aprGuidance =
         <section className="card formCard">
           <h2>Calculate Your Deal</h2>
         <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
-
+{worksheetTransferred && (
+  <div className="beforeCalculator">
+    <strong>✓ Your worksheet numbers have been transferred.</strong>
+    <p>Review the numbers below, complete the remaining required fields, then calculate your deal score.</p>
+  </div>
+)}
           
  <div className="beforeCalculator">
   <strong>📋 Before you enter your numbers, get these from the dealer:</strong>
