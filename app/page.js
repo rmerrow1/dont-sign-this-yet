@@ -196,7 +196,7 @@ const aprGuidance =
       <div className="progressFill" style={{width:`${progress}%`}}/>
       <div className="progressText">
         <span>Deal details: {progress}% complete</span>
-        <span>Version 1.0 engine</span>
+       
       </div>
     </div>
 
