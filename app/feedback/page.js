@@ -11,6 +11,42 @@ export default function FeedbackPage() {
     change: ""
   });
 
+  const [status, setStatus] = useState("idle");
+
+  const submitFeedback = async () => {
+    setStatus("sending");
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
+      });
+
+      if (!response.ok) {
+        throw new Error("Feedback could not be sent.");
+      }
+
+      setStatus("success");
+
+      setForm({
+        goal: "",
+        confusing: "",
+        problem: "",
+        scoreSense: "",
+        change: ""
+      });
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+    }
+  };
+
+  const update = (key, value) => {
+    setForm(prev => ({ ...prev, [key]: value }));
+  };
   const update = (key, value) => {
     setForm(prev => ({ ...prev, [key]: value }));
   };
@@ -74,9 +110,26 @@ export default function FeedbackPage() {
           />
         </div>
 
-        <button type="button" className="primaryButton">
-          Submit Feedback
-        </button>
+       <button
+  type="button"
+  className="primaryButton"
+  onClick={submitFeedback}
+  disabled={status === "sending"}
+>
+  {status === "sending" ? "Sending..." : "Submit Feedback"}
+</button>
+
+{status === "success" && (
+  <p className="feedbackSuccess">
+    Thank you. Your feedback was sent.
+  </p>
+)}
+
+{status === "error" && (
+  <p className="feedbackError">
+    Sorry, your feedback couldn't be sent. Please try again.
+  </p>
+)}
 
         <p className="muted feedbackNote">
           Please don't include sensitive personal or financial information.
