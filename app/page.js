@@ -38,6 +38,7 @@ export default function Home() {
   setCalculated(false);
   setAttempted(false);
 setWorksheetTransferred(true);
+    track("Worksheet Used");
   document.getElementById("calculator")?.scrollIntoView({
     behavior: "smooth",
     block: "start"
