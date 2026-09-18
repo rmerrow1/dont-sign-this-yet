@@ -584,7 +584,7 @@ const aprGuidance =
         title="📚 Learn the Numbers"
        
         items={[
-          ["%","APR","APR is the cost of borrowing. We compare it with an estimated benchmark based on vehicle condition and credit profile."],
+       ["📈","APR","APR is the cost of borrowing. We compare it with an estimated benchmark based on vehicle condition and credit profile."],
           ["📅","Loan Term","A lower payment can hide a much longer loan and significantly more interest."],
           ["↘️","Negative Equity","Rolling old debt into a new loan can make the new deal much more expensive."],
           ["➕","Add-ons","Optional products can add thousands. Ask what each item costs and whether it is required."],
