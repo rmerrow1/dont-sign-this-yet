@@ -14,7 +14,7 @@ const money = n => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD
 
 export default function Home() {
   const [form,setForm] = useState(initial);
-  const [marketSource,setMarketSource] = useState("multiple");
+  const [marketSource,setMarketSource] = useState("");
   const [calculated,setCalculated] = useState(false);
   const [attempted,setAttempted] = useState(false);
   const [worksheetTransferred,setWorksheetTransferred] = useState(false);
@@ -280,6 +280,7 @@ const aprGuidance =
     value={marketSource}
     onChange={e => setMarketSource(e.target.value)}
   >
+    <option value="" disabled>Select a source</option>
     <option value="multiple">I compared multiple sources</option>
     <option value="kbb">Kelley Blue Book</option>
     <option value="edmunds">Edmunds</option>
