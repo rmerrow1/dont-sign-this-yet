@@ -491,6 +491,7 @@ const aprGuidance =
   {!form.condition && <li>Vehicle condition</li>}
       {!(Number(form.price) > 0) && <li>Vehicle price</li>}
       {!(Number(form.market) > 0) && <li>Estimated fair market value</li>}
+       {!marketSource && <li>Market value source</li>}
      {!(Number(form.apr) > 0) && <li>APR</li>}
 {!(Number(form.term) > 0) && <li>Loan term</li>}
 {!(Number(form.income) > 0) && <li>Monthly take-home pay</li>}
