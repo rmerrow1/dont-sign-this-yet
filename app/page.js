@@ -94,7 +94,13 @@ if (!form.condition) {
     document.getElementById("results")?.scrollIntoView({behavior:"smooth",block:"start"});
   };
 
-const progress = Math.round(Object.values(form).filter(v=>String(v)!=="").length/Object.keys(initial).length*100);
+const progress = Math.round(
+  Object.entries(form).filter(([key, value]) =>
+    key !== "credit" && String(value).trim() !== ""
+  ).length /
+  (Object.keys(initial).length - 1) *
+  100
+);
 
 const price = Number(form.price) || 0;
 const market = Number(form.market) || 1;
