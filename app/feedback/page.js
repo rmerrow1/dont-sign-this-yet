@@ -47,9 +47,7 @@ export default function FeedbackPage() {
   const update = (key, value) => {
     setForm(prev => ({ ...prev, [key]: value }));
   };
-  const update = (key, value) => {
-    setForm(prev => ({ ...prev, [key]: value }));
-  };
+ 
 
   return (
     <main className="feedbackPage">
