@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "test": "node --test"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --test"
   },
   "dependencies": {
     "next": "15.5.24",
