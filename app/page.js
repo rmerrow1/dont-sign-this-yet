@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { calculateDealScore } from "../lib/scoring";
+import { track } from "@vercel/analytics";
 import "./globals.css";
 
 const initial = {
@@ -91,6 +92,7 @@ if (!form.condition) {
   setAttempted(true);
   if (validation.length) return;
     setCalculated(true);
+    track("Calculate Score");
     document.getElementById("results")?.scrollIntoView({behavior:"smooth",block:"start"});
   };
 
