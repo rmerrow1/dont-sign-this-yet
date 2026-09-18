@@ -623,9 +623,11 @@ const aprGuidance =
       </section>
     </div>
 
-    <footer>
-      © 2026 Don't Sign This Yet · Provisional Version 1.0 scoring engine · Decision-support tool only
-    </footer>
+  <footer>
+  © 2026 Don't Sign This Yet · Provisional Version 1.0 scoring engine · Decision-support tool only
+  <br />
+  <a href="/feedback">Send Feedback</a>
+</footer>
   </main>;
 }
 
