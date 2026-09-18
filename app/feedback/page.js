@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 export default function FeedbackPage() {
   const [form, setForm] = useState({
@@ -30,7 +31,7 @@ export default function FeedbackPage() {
       }
 
       setStatus("success");
-
+track("Feedback Submitted");
       setForm({
         goal: "",
         confusing: "",
