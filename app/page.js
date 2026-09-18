@@ -48,10 +48,10 @@ setWorksheetTransferred(true);
     const required = [
       ["price", "vehicle price", "greater than $0"],
       ["market", "estimated fair market value", "greater than $0"],
-      ["income", "monthly take-home pay", "greater than $0"],
-    ["expenses", "monthly essential expenses", "greater than $0"],
-      ["term", "loan term", "greater than 0"],
-["apr", "APR", "greater than $0"]
+  ["apr", "APR", "greater than $0"],
+["term", "loan term", "greater than 0"],
+["income", "monthly take-home pay", "greater than $0"],
+["expenses", "monthly essential expenses", "greater than $0"]
     ];
     const optional = [
      
