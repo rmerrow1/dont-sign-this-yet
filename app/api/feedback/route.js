@@ -1,8 +1,6 @@
 // Feedback email API
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 function clean(value) {
   return String(value || "").trim().slice(0, 5000);
 }
@@ -33,7 +31,15 @@ export async function POST(request) {
       );
     }
 
-    const { error } = await resend.emails.send({
+    if (!process.env.RESEND_API_KEY) {
+      console.error("Feedback email is not configured.");
+      return Response.json(
+        { error: "Feedback is temporarily unavailable. Please try again later." },
+        { status: 503 }
+      );
+    }
+
+    const { error } = await new Resend(process.env.RESEND_API_KEY).emails.send({
       from: "Don't Sign This Yet <onboarding@resend.dev>",
       to: ["rmerrow111@gmail.com"],
       subject: "New Don't Sign This Yet feedback",

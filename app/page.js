@@ -417,6 +417,8 @@ const aprGuidance =
     Compare your trade-in's value with what you still owe on the old loan.
     If you owe more than the vehicle is worth, the difference is negative
     equity and may be added to your new loan.
+    If the vehicle is worth more than you owe, the remaining trade credit
+    reduces our estimated amount financed. Confirm how the dealer applies it.
   </p>
 
   <p>
@@ -629,16 +631,16 @@ const aprGuidance =
           This tool organizes the information you enter and highlights areas that appear worth reviewing. It does not guarantee that a deal is good or bad and cannot replace reading your contract or obtaining professional advice.
         </p>
         <details>
-          <summary>About the provisional Version 1.1 engine</summary>
+          <summary>About the provisional Version 1.2 engine</summary>
           <p>
-            Version 1.1 uses the Version 1.0 categories, floors and critical caps. When entered, financed taxes, title and government fees are included in the estimated loan amount, payment and affordability calculation. Charges paid upfront are excluded from the loan estimate. Confirm the actual amount financed on the contract.
+            Version 1.2 uses the Version 1.0 categories, floors and critical caps. When entered, financed taxes, title and government fees are included in the estimated loan amount, payment and affordability calculation. Charges paid upfront are excluded from the loan estimate. Positive trade equity reduces the estimated amount financed; negative equity increases it. Confirm the actual amount financed on the contract.
           </p>
         </details>
       </section>
     </div>
 
   <footer>
-  © 2026 Don't Sign This Yet · Provisional Version 1.1 scoring engine · Decision-support tool only
+  © 2026 Don't Sign This Yet · Provisional Version 1.2 scoring engine · Decision-support tool only
   <br />
   <a href="/feedback">Send Feedback</a>
 </footer>
