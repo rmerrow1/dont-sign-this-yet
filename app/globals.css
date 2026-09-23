@@ -36,6 +36,15 @@
 .dealerCheckResult ul{margin:8px 0;padding-left:20px}
 .preliminaryNotice{text-align:left;margin:14px 0 0;padding:12px 14px;border:1px solid #e8cf83;border-radius:10px;background:#fff9e8;color:#553f0c;font-size:14px;line-height:1.5}
 .preliminaryNotice a{color:#0b5d9d;font-weight:800}
+.termCompare{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:12px;background:#f7fafd;text-align:left;font-size:14px;line-height:1.5}
+.termCompare h3{margin:0 0 6px;color:var(--navy);font-size:16px}
+.termCompare p{margin:6px 0 12px}
+.termCompare p:last-child{margin:12px 0 0}
+.termCompare table{width:100%;border-collapse:collapse;font-size:13px}
+.termCompare th,.termCompare td{padding:7px 4px;border-bottom:1px solid var(--line);text-align:right}
+.termCompare th:first-child{text-align:left}
+.termCompare tbody th{font-weight:600}
+@media(max-width:420px){.termCompare{padding:12px}.termCompare table{font-size:12px}.termCompare th,.termCompare td{padding:6px 2px}}
 .results{scroll-margin-top:96px}
 .scoreCard{padding-top:24px}
 .financeCharges{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:14px;font-weight:700;line-height:1.4;color:var(--navy);cursor:pointer}
