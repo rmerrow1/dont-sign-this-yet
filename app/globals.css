@@ -36,6 +36,16 @@
 .dealerCheckResult ul{margin:8px 0;padding-left:20px}
 .financeCharges{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:14px;font-weight:700;line-height:1.4;color:var(--navy);cursor:pointer}
 .financeCharges input{width:18px;height:18px;flex:none;margin:1px 0 0;cursor:pointer}
+.marketSource{margin-top:14px}
+.marketSource label{display:block;margin-bottom:6px;font-size:12px;font-weight:800;color:#405367}
+.helpDetails{margin-top:16px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:#f7fafd;color:#405367}
+.helpDetails summary{min-height:48px;display:flex;align-items:center;color:var(--navy);font-size:14px;line-height:1.4}
+.helpDetails summary::before{content:"▸";margin-right:9px;font-size:17px}
+.helpDetails[open] summary::before{content:"▾"}
+.helpDetails[open]{padding-bottom:14px}
+.helpDetails ul{padding-left:20px}
+.helpDetails p{font-size:14px;line-height:1.5}
+.helpDetails a{overflow-wrap:anywhere}
 /* Feedback page */
 
 .feedbackPage {
