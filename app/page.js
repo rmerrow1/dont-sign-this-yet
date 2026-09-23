@@ -451,7 +451,7 @@ const aprGuidance =
 </Section>
 
 
-          <details className="dealerCheck">
+          <details className="dealerCheck" id="dealer-costs">
             <summary>Taxes, title and dealer checks (optional)</summary>
             <p className="muted">We add the selling price, add-ons, dealer fees and listed government charges to estimate the out-the-door price before a down payment or trade-in. Enter the dealer's quote to compare. Financed government charges also affect the payment and score.</p>
             <div className="formGrid">
@@ -483,7 +483,7 @@ const aprGuidance =
         <aside className="results" id="results">
           <section className="card scoreCard">
             <div className="resultsTop">
-              <span className="eyebrow dark">YOUR DEAL SCORE</span>
+              <span className="eyebrow dark">{scoreReady && !dealerCheck.completeCosts ? "PRELIMINARY DEAL SCORE" : "YOUR DEAL SCORE"}</span>
      
             </div>
        <div className={`scoreRing ${scoreReady?result.color:"neutral"}`}>
@@ -526,10 +526,10 @@ const aprGuidance =
             }
 
        <div className={scoreReady ? "resultsData" : "resultsData stale"} hidden={!scoreReady}>
-           
+              {!dealerCheck.completeCosts && <p className="preliminaryNotice"><strong>Preliminary result.</strong> Taxes, title and registration, or other government fees are missing. Your score, amount financed and payment may change. <a href="#dealer-costs">Add these charges</a> (enter 0 if none), then recalculate.</p>}
 
               <div className="kpis">
-                <Kpi label="Estimated monthly payment" value={money(result.monthly)}/>
+                <Kpi label={dealerCheck.completeCosts ? "Estimated monthly payment" : "Payment with entered costs"} value={money(result.monthly)}/>
                 <Kpi label="Amount financed" value={money(result.financed)}/>
                 <Kpi label={dealerCheck.completeCosts ? "Estimated out-the-door price" : "Known costs so far"} value={money(dealerCheck.total)}/>
                 <Kpi label="Estimated interest" value={money(result.interest)}/>
