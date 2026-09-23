@@ -14,11 +14,13 @@ npm run start
 
 ## Architecture
 - `app/page.js` — responsive React UI
-- `lib/scoring.js` — provisional Version 1.1 scoring engine
+- `lib/scoring.js` — provisional Version 1.2 scoring engine
 - `lib/scoring-v1.js` — preserved Version 1.0 scoring engine
 - `lib/payment.js` — shared loan estimate for scoring and dealer comparison
-- `lib/dealer-checks.js` — dealer quote comparisons using the Version 1.1 payment estimate
+- `lib/dealer-checks.js` — dealer quote comparisons using the Version 1.2 payment estimate
 - `app/globals.css` — mobile-first styling
 
 ## Important
 Version 1.1 adds entered taxes, title and government fees to the amount financed when the visitor says those charges are included in the loan. If paid upfront, the charges reduce the savings reserve instead. The monthly payment shown with the score and the dealer payment comparison use the same estimate. Unentered charges count as zero, so the visitor should confirm the actual amount financed on the contract. Version 1.0 remains in `lib/scoring-v1.js` for reference.
+
+Version 1.2 applies the net trade balance to the loan estimate: trade value above the payoff reduces the amount financed, while a payoff above trade value increases it. The Version 1.1 scoring and payment formulas remain in `lib/scoring-v1.1.js` and `lib/payment-v1.1.js` for reference.
