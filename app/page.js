@@ -85,7 +85,16 @@ if (!marketSource) {
   if (validation.length) return;
     setCalculated(true);
     track("Calculate Score");
-    document.getElementById("results")?.scrollIntoView({behavior:"smooth",block:"start"});
+    requestAnimationFrame(() => {
+      const results = document.getElementById("results");
+      const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+      if (results) {
+        window.scrollTo({
+          top: window.scrollY + results.getBoundingClientRect().top - headerHeight - 16,
+          behavior: "smooth"
+        });
+      }
+    });
   };
 
 const requiredNumbers = ["price", "market", "apr", "term", "income", "expenses"];
