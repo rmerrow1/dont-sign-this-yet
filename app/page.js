@@ -97,6 +97,26 @@ if (!marketSource) {
     });
   };
 
+  const jumpToMissingCharges = event => {
+    event.preventDefault();
+    const section = document.getElementById("dealer-costs");
+    if (!section) return;
+    section.open = true;
+    const firstMissing = [
+      ["taxes", "dealer-taxes"],
+      ["titleRegistration", "dealer-title"],
+      ["otherGovernmentFees", "dealer-government"]
+    ].find(([key]) => String(dealerDetails[key] ?? "").trim() === "");
+    requestAnimationFrame(() => {
+      const target = document.getElementById(firstMissing?.[1] ?? "dealer-taxes");
+      const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+      if (target) window.scrollTo({
+        top: window.scrollY + target.getBoundingClientRect().top - headerHeight - 24,
+        behavior: "smooth"
+      });
+    });
+  };
+
 const requiredNumbers = ["price", "market", "apr", "term", "income", "expenses"];
 const requiredComplete = requiredNumbers.filter(key =>
   String(form[key] ?? "").trim() !== "" && Number.isFinite(Number(form[key])) &&
@@ -541,7 +561,7 @@ const aprGuidance =
             }
 
        <div className={scoreReady ? "resultsData" : "resultsData stale"} hidden={!scoreReady}>
-              {!dealerCheck.completeCosts && <p className="preliminaryNotice"><strong>Preliminary result.</strong> Taxes, title and registration, or other government fees are missing. Your score, amount financed and payment may change. <a href="#dealer-costs">Add these charges</a> (enter 0 if none), then recalculate.</p>}
+              {!dealerCheck.completeCosts && <p className="preliminaryNotice"><strong>Preliminary result.</strong> Taxes, title and registration, or other government fees are missing. Your score, amount financed and payment may change. <a href="#dealer-costs" onClick={jumpToMissingCharges}>Add these charges</a> (enter 0 if none), then recalculate.</p>}
 
               <div className="kpis">
                 <Kpi label={dealerCheck.completeCosts ? "Estimated monthly payment" : "Payment with entered costs"} value={money(result.monthly)}/>
