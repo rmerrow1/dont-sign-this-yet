@@ -224,8 +224,8 @@ const aprGuidance =
         <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
         <p className="muted">* Required to calculate a score</p>
           
- <div className="beforeCalculator">
-  <strong>📋 Before you enter your numbers, get these from the dealer:</strong>
+ <details className="helpDetails beforeCalculator">
+  <summary>📋 What numbers should I get from the dealer?</summary>
   <ul>
     <li>Vehicle selling price</li>
     <li>Out-the-door price</li>
@@ -235,7 +235,7 @@ const aprGuidance =
     <li>APR and loan term</li>
     <li>Monthly payment</li>
   </ul>
-</div> <Section title="🚙 Vehicle">
+</details> <Section title="🚙 Vehicle">
             <div className="formGrid">
               <div className="field">
                 <label>Vehicle condition *</label>
@@ -254,14 +254,6 @@ const aprGuidance =
   and add-ons, before signing.
 </p>
             </div>
-  <div className="marketGuide">
-  <strong>💡 Need help estimating market value?</strong>
-
-  <p>
-    Before entering a market value, compare this vehicle using its exact
-    year, make, model, trim, mileage and condition.
-  </p>
-
  <div className="marketSource">
   <label htmlFor="marketSource"><strong>How did you estimate the market value? *</strong></label>
   <select
@@ -277,7 +269,14 @@ const aprGuidance =
     <option value="other">Another source</option>
     <option value="unsure">I'm not sure</option>
   </select>
-</div> <div className="marketLinks">
+</div>
+  <details className="helpDetails marketGuide">
+  <summary>💡 Need help estimating market value?</summary>
+
+  <p>
+    Compare this vehicle using its exact year, make, model, trim, mileage and condition.
+  </p>
+  <div className="marketLinks">
     <p><strong>Research the vehicle's value:</strong></p>
 
     <p>
@@ -321,7 +320,7 @@ const aprGuidance =
     Enter your best-supported estimate above. Don't use the dealer's asking
     price as the market value.
   </p>
-</div>
+</details>
           </Section>
 
           <Section title="💰 Financing">
@@ -349,8 +348,8 @@ const aprGuidance =
                 </select>    
       </div>
               </div>
-          <div className="financeGuide">
-  <strong>💡 Check the financing before you sign</strong>
+          <details className="helpDetails financeGuide">
+  <summary>💡 Need help checking the financing?</summary>
 
   <p>
     Compare the APR you're being offered with rates available from a bank
@@ -392,7 +391,7 @@ const aprGuidance =
     qualify for. Your credit profile, vehicle, loan term and lender can
     affect your actual APR.
   </p>
-</div>
+</details>
           </Section>
 
           <Section title="👤 Your affordability picture">
@@ -410,8 +409,8 @@ const aprGuidance =
             <div className="formGrid">
               <Field label="Trade-in value ($)" id="tradeValue" value={form["tradeValue"]} onChange={value => update("tradeValue", value)}/>
               <Field label="Amount still owed ($)" id="tradeOwed" value={form["tradeOwed"]} onChange={value => update("tradeOwed", value)}/>
-            </div><div className="tradeGuide">
-  <strong>💡 Check your trade-in carefully</strong>
+            </div><details className="helpDetails tradeGuide">
+  <summary>💡 How does my trade-in affect this deal?</summary>
 
   <p>
     Compare your trade-in's value with what you still owe on the old loan.
@@ -431,7 +430,7 @@ const aprGuidance =
     deal. Look at the complete transaction, including the new vehicle price
     and financing.
   </p>
-</div>
+</details>
           </Section>
 
          <Section title="📋 Deal extras">
