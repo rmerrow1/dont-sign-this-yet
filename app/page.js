@@ -386,6 +386,17 @@ const aprGuidance =
 </div>
           </Section>
 
+          <Section title="👤 Your affordability picture">
+            <div className="formGrid">
+              <Field label="Monthly take-home pay ($) *" id="income" value={form["income"]} onChange={value => update("income", value)}/>
+              <Field label="Liquid savings ($)" id="savings" value={form["savings"]} onChange={value => update("savings", value)}/>
+              <Field label="Monthly essential expenses ($) *" id="expenses" value={form["expenses"]} onChange={value => update("expenses", value)}/>
+              <Field label="Monthly insurance ($)" id="insurance" value={form["insurance"]} onChange={value => update("insurance", value)}/>
+              <Field label="Monthly fuel ($)" id="fuel" value={form["fuel"]} onChange={value => update("fuel", value)}/>
+              <Field label="Monthly maintenance reserve ($)" id="maintenance" value={form["maintenance"]} onChange={value => update("maintenance", value)}/>
+            </div>
+          </Section>
+
           <Section title="🔄 Trade-In">
             <div className="formGrid">
               <Field label="Trade-in value ($)" id="tradeValue" value={form["tradeValue"]} onChange={value => update("tradeValue", value)}/>
@@ -426,16 +437,6 @@ const aprGuidance =
   </div>
 </Section>
 
-          <Section title="👤 Your affordability picture">
-            <div className="formGrid">
-              <Field label="Monthly take-home pay ($) *" id="income" value={form["income"]} onChange={value => update("income", value)}/>
-              <Field label="Liquid savings ($)" id="savings" value={form["savings"]} onChange={value => update("savings", value)}/>
-              <Field label="Monthly essential expenses ($) *" id="expenses" value={form["expenses"]} onChange={value => update("expenses", value)}/>
-              <Field label="Monthly insurance ($)" id="insurance" value={form["insurance"]} onChange={value => update("insurance", value)}/>
-              <Field label="Monthly fuel ($)" id="fuel" value={form["fuel"]} onChange={value => update("fuel", value)}/>
-              <Field label="Monthly maintenance reserve ($)" id="maintenance" value={form["maintenance"]} onChange={value => update("maintenance", value)}/>
-            </div>
-          </Section>
 
           <details className="dealerCheck">
             <summary>Check the dealer's numbers (optional)</summary>
