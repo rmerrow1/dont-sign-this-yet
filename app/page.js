@@ -156,6 +156,12 @@ if(transportRatio > 25){
   );
 }
 
+if(income - expenses - result.monthly - insurance - fuel - maintenance < 0){
+  scoreReasons.push(
+    "Your listed essential expenses and estimated transportation costs exceed take-home pay. Recheck the expenses and consider a lower total vehicle cost."
+  );
+}
+
 if(reserveMonths !== null && reserveMonths < 1){
   scoreReasons.push(
     "After the down payment, your listed savings provide less than one month of essential expenses. Consider how much cash you want to keep available after buying the vehicle."
@@ -636,16 +642,16 @@ const aprGuidance =
           This tool organizes the information you enter and highlights areas that appear worth reviewing. It does not guarantee that a deal is good or bad and cannot replace reading your contract or obtaining professional advice.
         </p>
         <details>
-          <summary>About the provisional Version 1.2 engine</summary>
+          <summary>About the provisional Version 1.3 engine</summary>
           <p>
-            Version 1.2 uses the Version 1.0 categories, floors and critical caps. When entered, financed taxes, title and government fees are included in the estimated loan amount, payment and affordability calculation. Charges paid upfront are excluded from the loan estimate. Positive trade equity reduces the estimated amount financed; negative equity increases it. Confirm the actual amount financed on the contract.
+            Version 1.3 retains the Version 1.2 payment and trade-in calculations. It limits the score when the price is far above your estimated market value, dealer fees are unusually high, or listed essential expenses plus transportation exceed take-home pay. Entered financed taxes, title and government fees affect the payment and affordability estimate. Confirm the actual amount financed on the contract.
           </p>
         </details>
       </section>
     </div>
 
   <footer>
-  © 2026 Don't Sign This Yet · Provisional Version 1.2 scoring engine · Decision-support tool only
+  © 2026 Don't Sign This Yet · Provisional Version 1.3 scoring engine · Decision-support tool only
   <br />
   <a href="/feedback">Send Feedback</a>
 </footer>
