@@ -1,4 +1,4 @@
-# Don't Sign This Yet — Production Web App V1
+# Don't Sign This Yet — Production Web App
 
 ## Run locally
 1. Install Node.js 20+
@@ -14,8 +14,11 @@ npm run start
 
 ## Architecture
 - `app/page.js` — responsive React UI
-- `lib/scoring.js` — frozen provisional Version 1.0 scoring engine
+- `lib/scoring.js` — provisional Version 1.1 scoring engine
+- `lib/scoring-v1.js` — preserved Version 1.0 scoring engine
+- `lib/payment.js` — shared loan estimate for scoring and dealer comparison
+- `lib/dealer-checks.js` — dealer quote comparisons using the Version 1.1 payment estimate
 - `app/globals.css` — mobile-first styling
 
 ## Important
-The scoring engine is intentionally isolated from the UI so future changes can be versioned without silently changing Version 1.0.
+Version 1.1 adds entered taxes, title and government fees to the amount financed when the visitor says those charges are included in the loan. If paid upfront, the charges reduce the savings reserve instead. The monthly payment shown with the score and the dealer payment comparison use the same estimate. Unentered charges count as zero, so the visitor should confirm the actual amount financed on the contract. Version 1.0 remains in `lib/scoring-v1.js` for reference.

@@ -19,11 +19,14 @@ export default function Home() {
   const [marketSource,setMarketSource] = useState("");
   const [calculated,setCalculated] = useState(false);
   const [attempted,setAttempted] = useState(false);
-  const [dealerDetails,setDealerDetails] = useState({outTheDoor:"", taxes:"", titleRegistration:"", otherGovernmentFees:"", payment:""});
-  const result = useMemo(()=>calculateDealScore(form),[form]);
+  const [dealerDetails,setDealerDetails] = useState({outTheDoor:"", taxes:"", titleRegistration:"", otherGovernmentFees:"", payment:"", financeGovernmentCharges:true});
+  const result = useMemo(()=>calculateDealScore({...form,...dealerDetails}),[form,dealerDetails]);
   const dealerCheck = checkDealerNumbers(form, dealerDetails);
-  const updateDealerDetail = (key, value) => setDealerDetails(prev => ({...prev, [key]:value}));
-  const dealerDetailError = Object.values(dealerDetails).some(value =>
+  const updateDealerDetail = (key, value) => {
+    setDealerDetails(prev => ({...prev, [key]:value}));
+    if (["taxes", "titleRegistration", "otherGovernmentFees", "financeGovernmentCharges"].includes(key)) setCalculated(false);
+  };
+  const dealerDetailError = Object.entries(dealerDetails).filter(([key]) => key !== "financeGovernmentCharges").some(([,value]) =>
     String(value).trim() && (!Number.isFinite(Number(value)) || Number(value) < 0));
 
   const validation = useMemo(() => {
@@ -63,9 +66,13 @@ if (!marketSource) {
         errors.push(`Enter a valid ${label}.`);
       }
     }
+    for (const [key, label] of [["taxes", "taxes"], ["titleRegistration", "title and registration"], ["otherGovernmentFees", "other government fees"]]) {
+      const raw = String(dealerDetails[key] ?? "").trim();
+      if (raw && (!Number.isFinite(Number(raw)) || Number(raw) < 0)) errors.push(`Enter valid ${label}.`);
+    }
 
     return errors;
-  }, [form, marketSource]);
+  }, [form, marketSource, dealerDetails]);
   const scoreReady = calculated && validation.length === 0;
 
   const update=(key,value)=>{
@@ -100,7 +107,9 @@ const neg = Math.max(0,(Number(form.tradeOwed)||0)-(Number(form.tradeValue)||0))
 const priceDiff = ((price-market)/market)*100;
 const feePct = fees/Math.max(price,1)*100;
 const transportRatio = (result.monthly+insurance+fuel+maintenance)/income*100;
-const reserveMonths = form.savings !== "" ? Math.max(0,(Number(form.savings)||0)-(Number(form.down)||0))/expenses : null;
+const upfrontCharges = dealerDetails.financeGovernmentCharges ? 0 :
+  (Number(dealerDetails.taxes)||0)+(Number(dealerDetails.titleRegistration)||0)+(Number(dealerDetails.otherGovernmentFees)||0);
+const reserveMonths = form.savings !== "" ? Math.max(0,(Number(form.savings)||0)-(Number(form.down)||0)-upfrontCharges)/expenses : null;
 
 const scoreReasons = [];
 
@@ -439,8 +448,8 @@ const aprGuidance =
 
 
           <details className="dealerCheck">
-            <summary>Check the dealer's numbers (optional)</summary>
-            <p className="muted">Compare the dealer's out-the-door price and monthly payment with the figures you entered above. These checks do not change your deal score.</p>
+            <summary>Taxes, title and dealer checks (optional)</summary>
+            <p className="muted">Compare the dealer's out-the-door price and monthly payment with the figures above. If the listed government charges are financed, they also affect your estimated payment and score. The dealer's quoted price and payment are only used for the comparison.</p>
             <div className="formGrid">
               <Field label="Dealer's out-the-door price ($)" id="dealer-otd" value={dealerDetails.outTheDoor} onChange={value=>updateDealerDetail("outTheDoor",value)}/>
               <Field label="Taxes ($)" id="dealer-taxes" value={dealerDetails.taxes} onChange={value=>updateDealerDetail("taxes",value)}/>
@@ -448,12 +457,13 @@ const aprGuidance =
               <Field label="Other government fees ($)" id="dealer-government" value={dealerDetails.otherGovernmentFees} onChange={value=>updateDealerDetail("otherGovernmentFees",value)}/>
               <Field label="Dealer's monthly payment ($)" id="dealer-payment" value={dealerDetails.payment} onChange={value=>updateDealerDetail("payment",value)}/>
             </div>
-            <p className="muted">Enter 0 for a charge that doesn't apply. Use the selling price, dealer add-ons and dealer fees above; don't enter them again.</p>
+            <label className="financeCharges"><input type="checkbox" checked={dealerDetails.financeGovernmentCharges} onChange={e=>updateDealerDetail("financeGovernmentCharges",e.target.checked)}/> Include taxes, title and government fees in the loan estimate</label>
+            <p className="muted">Enter 0 if a tax or government charge doesn't apply. Use the selling price, dealer add-ons and dealer fees above; don't enter them again.</p>
             {dealerDetailError ? <p className="validation">Enter nonnegative numbers in these optional fields.</p> :
               (dealerDetails.outTheDoor || dealerDetails.payment) && <div className="dealerCheckResult" aria-live="polite">
                 {!dealerCheck.completeCosts ? <p>Enter taxes, title and registration, and other government fees (use 0 when none) to compare the totals.</p> : <>
                   {Number(dealerDetails.outTheDoor) > 0 && Number(form.price) > 0 && <p>Itemized out-the-door total: <strong>{money(dealerCheck.total)}</strong></p>}
-                  {Number(dealerDetails.payment) > 0 && Number(form.price) > 0 && Number(form.apr) > 0 && Number(form.term) > 0 && <p>Estimated monthly payment including the listed charges: <strong>{money(dealerCheck.estimatedPayment)}</strong></p>}
+                  {Number(dealerDetails.payment) > 0 && Number(form.price) > 0 && Number(form.apr) > 0 && Number(form.term) > 0 && <p>Estimated monthly payment using the same loan amount as the score: <strong>{money(dealerCheck.estimatedPayment)}</strong></p>}
                   {dealerCheck.notes.length ? <ul>{dealerCheck.notes.map((note,i)=><li key={i}>{note}</li>)}</ul> :
                     <p>{dealerCheck.comparisons ? "No difference greater than $25 was found in the comparisons available from your entries." : "Enter the vehicle price, APR and loan term above to check the figures you supplied."}</p>}
                 </>}
@@ -514,11 +524,12 @@ const aprGuidance =
            
 
               <div className="kpis">
-                <Kpi label="Monthly payment" value={money(result.monthly)}/>
+                <Kpi label="Estimated monthly payment" value={money(result.monthly)}/>
                 <Kpi label="Amount financed" value={money(result.financed)}/>
                 <Kpi label="Estimated interest" value={money(result.interest)}/>
                 <Kpi label="Benchmark APR" value={result.benchmark.toFixed(1)+"%"}/>
               </div>
+              <p className="muted">This payment uses only the charges you entered. Confirm the actual amount financed and payment on the dealer's contract.</p>
 
               <div className="breakdown">
                 {Object.entries(result.categories).map(([key,val])=>
@@ -618,16 +629,16 @@ const aprGuidance =
           This tool organizes the information you enter and highlights areas that appear worth reviewing. It does not guarantee that a deal is good or bad and cannot replace reading your contract or obtaining professional advice.
         </p>
         <details>
-          <summary>About the provisional Version 1.0 engine</summary>
+          <summary>About the provisional Version 1.1 engine</summary>
           <p>
-            Version 1.0 uses four categories: Vehicle Deal, Financing, Affordability, and Deal Structure. Each contributes up to 25 points. Category floors and critical score caps are applied after category calculations.
+            Version 1.1 uses the Version 1.0 categories, floors and critical caps. When entered, financed taxes, title and government fees are included in the estimated loan amount, payment and affordability calculation. Charges paid upfront are excluded from the loan estimate. Confirm the actual amount financed on the contract.
           </p>
         </details>
       </section>
     </div>
 
   <footer>
-  © 2026 Don't Sign This Yet · Provisional Version 1.0 scoring engine · Decision-support tool only
+  © 2026 Don't Sign This Yet · Provisional Version 1.1 scoring engine · Decision-support tool only
   <br />
   <a href="/feedback">Send Feedback</a>
 </footer>
