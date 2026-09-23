@@ -453,7 +453,7 @@ const aprGuidance =
 
           <details className="dealerCheck">
             <summary>Taxes, title and dealer checks (optional)</summary>
-            <p className="muted">Compare the dealer's out-the-door price and monthly payment with the figures above. If the listed government charges are financed, they also affect your estimated payment and score. The dealer's quoted price and payment are only used for the comparison.</p>
+            <p className="muted">We add the selling price, add-ons, dealer fees and listed government charges to estimate the out-the-door price before a down payment or trade-in. Enter the dealer's quote to compare. Financed government charges also affect the payment and score.</p>
             <div className="formGrid">
               <Field label="Dealer's out-the-door price ($)" id="dealer-otd" value={dealerDetails.outTheDoor} onChange={value=>updateDealerDetail("outTheDoor",value)}/>
               <Field label="Taxes ($)" id="dealer-taxes" value={dealerDetails.taxes} onChange={value=>updateDealerDetail("taxes",value)}/>
@@ -464,12 +464,13 @@ const aprGuidance =
             <label className="financeCharges"><input type="checkbox" checked={dealerDetails.financeGovernmentCharges} onChange={e=>updateDealerDetail("financeGovernmentCharges",e.target.checked)}/> Include taxes, title and government fees in the loan estimate</label>
             <p className="muted">Enter 0 if a tax or government charge doesn't apply. Use the selling price, dealer add-ons and dealer fees above; don't enter them again.</p>
             {dealerDetailError ? <p className="validation">Enter nonnegative numbers in these optional fields.</p> :
-              (dealerDetails.outTheDoor || dealerDetails.payment) && <div className="dealerCheckResult" aria-live="polite">
-                {!dealerCheck.completeCosts ? <p>Enter taxes, title and registration, and other government fees (use 0 when none) to compare the totals.</p> : <>
-                  {Number(dealerDetails.outTheDoor) > 0 && Number(form.price) > 0 && <p>Itemized out-the-door total: <strong>{money(dealerCheck.total)}</strong></p>}
-                  {Number(dealerDetails.payment) > 0 && Number(form.price) > 0 && String(form.apr).trim() !== "" && Number.isFinite(Number(form.apr)) && Number(form.apr) >= 0 && Number(form.term) > 0 && <p>Estimated monthly payment using the same loan amount as the score: <strong>{money(dealerCheck.estimatedPayment)}</strong></p>}
+              Number(form.price) > 0 && <div className="dealerCheckResult" aria-live="polite">
+                <p>{dealerCheck.completeCosts ? "Estimated out-the-door price" : "Known costs so far"}: <strong>{money(dealerCheck.total)}</strong></p>
+                {!dealerCheck.completeCosts && <p>Enter taxes, title and registration, and other government fees (use 0 when none) for a complete estimate and dealer comparison.</p>}
+                {dealerCheck.completeCosts && <>
+                  {Number(dealerDetails.payment) > 0 && String(form.apr).trim() !== "" && Number.isFinite(Number(form.apr)) && Number(form.apr) >= 0 && Number(form.term) > 0 && <p>Estimated monthly payment using the same loan amount as the score: <strong>{money(dealerCheck.estimatedPayment)}</strong></p>}
                   {dealerCheck.notes.length ? <ul>{dealerCheck.notes.map((note,i)=><li key={i}>{note}</li>)}</ul> :
-                    <p>{dealerCheck.comparisons ? "No difference greater than $25 was found in the comparisons available from your entries." : "Enter the vehicle price, APR and loan term above to check the figures you supplied."}</p>}
+                    dealerCheck.comparisons > 0 && <p>No difference greater than $25 was found in the comparisons available from your entries.</p>}
                 </>}
               </div>}
           </details>
@@ -530,9 +531,11 @@ const aprGuidance =
               <div className="kpis">
                 <Kpi label="Estimated monthly payment" value={money(result.monthly)}/>
                 <Kpi label="Amount financed" value={money(result.financed)}/>
+                <Kpi label={dealerCheck.completeCosts ? "Estimated out-the-door price" : "Known costs so far"} value={money(dealerCheck.total)}/>
                 <Kpi label="Estimated interest" value={money(result.interest)}/>
                 <Kpi label="Benchmark APR" value={result.benchmark.toFixed(1)+"%"}/>
               </div>
+              <p className="muted">{dealerCheck.completeCosts ? "Out-the-door price is before any down payment or trade-in. Blank add-ons or dealer fees are treated as $0." : "Out-the-door total is incomplete until you enter taxes, title and registration, and other government fees (use 0 when none). Blank add-ons or dealer fees are treated as $0."}</p>
               <p className="muted">This payment uses only the charges you entered. Confirm the actual amount financed and payment on the dealer's contract.</p>
 
               <div className="breakdown">
