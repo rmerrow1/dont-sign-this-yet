@@ -34,7 +34,7 @@ export default function Home() {
     const required = [
       ["price", "vehicle price", "greater than $0"],
       ["market", "estimated fair market value", "greater than $0"],
-  ["apr", "APR", "greater than $0"],
+  ["apr", "APR", "0% or greater"],
 ["term", "loan term", "greater than 0"],
 ["income", "monthly take-home pay", "greater than $0"],
 ["expenses", "monthly essential expenses", "greater than $0"]
@@ -54,7 +54,7 @@ if (!marketSource) {
 }
     for (const [key, label, rule] of required) {
       const value = Number(form[key]);
-      if (!String(form[key] ?? "").trim() || !Number.isFinite(value) || value <= 0) {
+      if (!String(form[key] ?? "").trim() || !Number.isFinite(value) || (key === "apr" ? value < 0 : value <= 0)) {
         errors.push(`Enter ${label} ${rule}.`);
       }
     }
@@ -90,7 +90,8 @@ if (!marketSource) {
 
 const requiredNumbers = ["price", "market", "apr", "term", "income", "expenses"];
 const requiredComplete = requiredNumbers.filter(key =>
-  String(form[key] ?? "").trim() !== "" && Number.isFinite(Number(form[key])) && Number(form[key]) > 0
+  String(form[key] ?? "").trim() !== "" && Number.isFinite(Number(form[key])) &&
+  (key === "apr" ? Number(form[key]) >= 0 : Number(form[key]) > 0)
 ).length + (form.condition ? 1 : 0) + (marketSource ? 1 : 0);
 const progress = Math.round(requiredComplete / 8 * 100);
 
@@ -174,6 +175,8 @@ const aprGuidance =
     ? `Your APR is ${result.aprDiff.toFixed(1)} percentage points above the estimated benchmark. Consider comparing another lender's offer.`
     : result.aprDiff >= 1
     ? `Your APR is ${result.aprDiff.toFixed(1)} percentage points above the estimated benchmark. Comparing another offer may help you find a lower rate.`
+    : Number(form.apr) < result.benchmark
+    ? `Your APR is below the estimated benchmark for this credit profile.`
     : `Your APR is close to the estimated benchmark for this credit profile.`;
 
   const marketConfidence =
@@ -464,7 +467,7 @@ const aprGuidance =
               (dealerDetails.outTheDoor || dealerDetails.payment) && <div className="dealerCheckResult" aria-live="polite">
                 {!dealerCheck.completeCosts ? <p>Enter taxes, title and registration, and other government fees (use 0 when none) to compare the totals.</p> : <>
                   {Number(dealerDetails.outTheDoor) > 0 && Number(form.price) > 0 && <p>Itemized out-the-door total: <strong>{money(dealerCheck.total)}</strong></p>}
-                  {Number(dealerDetails.payment) > 0 && Number(form.price) > 0 && Number(form.apr) > 0 && Number(form.term) > 0 && <p>Estimated monthly payment using the same loan amount as the score: <strong>{money(dealerCheck.estimatedPayment)}</strong></p>}
+                  {Number(dealerDetails.payment) > 0 && Number(form.price) > 0 && String(form.apr).trim() !== "" && Number.isFinite(Number(form.apr)) && Number(form.apr) >= 0 && Number(form.term) > 0 && <p>Estimated monthly payment using the same loan amount as the score: <strong>{money(dealerCheck.estimatedPayment)}</strong></p>}
                   {dealerCheck.notes.length ? <ul>{dealerCheck.notes.map((note,i)=><li key={i}>{note}</li>)}</ul> :
                     <p>{dealerCheck.comparisons ? "No difference greater than $25 was found in the comparisons available from your entries." : "Enter the vehicle price, APR and loan term above to check the figures you supplied."}</p>}
                 </>}
@@ -506,7 +509,7 @@ const aprGuidance =
       {!(Number(form.price) > 0) && <li>Vehicle price</li>}
       {!(Number(form.market) > 0) && <li>Estimated fair market value</li>}
        {!marketSource && <li>Market value source</li>}
-     {!(Number(form.apr) > 0) && <li>APR</li>}
+     {!(String(form.apr).trim() !== "" && Number.isFinite(Number(form.apr)) && Number(form.apr) >= 0) && <li>APR</li>}
 {!(Number(form.term) > 0) && <li>Loan term</li>}
 {!(Number(form.income) > 0) && <li>Monthly take-home pay</li>}
 {!(Number(form.expenses) > 0) && <li>Monthly essential expenses</li>}
