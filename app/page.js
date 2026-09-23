@@ -671,16 +671,16 @@ const aprGuidance =
           This tool organizes the information you enter and highlights areas that appear worth reviewing. It does not guarantee that a deal is good or bad and cannot replace reading your contract or obtaining professional advice.
         </p>
         <details>
-          <summary>About the provisional Version 1.3 engine</summary>
+          <summary>About the provisional Version 1.4 engine</summary>
           <p>
-            Version 1.3 retains the Version 1.2 payment and trade-in calculations. It limits the score when the price is far above your estimated market value, dealer fees are unusually high, or listed essential expenses plus transportation exceed take-home pay. Entered financed taxes, title and government fees affect the payment and affordability estimate. Confirm the actual amount financed on the contract.
+            Version 1.4 retains the Version 1.3 payment and scoring rules and limits the overall score to 69 when affordability is 5 out of 25 or lower. This prevents a green verdict when the listed payment, transportation costs and cash reserves produce a very low affordability score. Entered financed taxes, title and government fees affect the payment and affordability estimate. Confirm the actual amount financed on the contract.
           </p>
         </details>
       </section>
     </div>
 
   <footer>
-  © 2026 Don't Sign This Yet · Provisional Version 1.3 scoring engine · Decision-support tool only
+  © 2026 Don't Sign This Yet · Provisional Version 1.4 scoring engine · Decision-support tool only
   <br />
   <a href="/feedback">Send Feedback</a>
 </footer>
