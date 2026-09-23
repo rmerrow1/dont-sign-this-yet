@@ -46,6 +46,9 @@ export default function Home() {
 if (!form.condition) {
   errors.push("Select whether the vehicle is new or used.");
 }
+if (!marketSource) {
+  errors.push("Select how you estimated the fair market value.");
+}
     for (const [key, label, rule] of required) {
       const value = Number(form[key]);
       if (!String(form[key] ?? "").trim() || !Number.isFinite(value) || value <= 0) {
@@ -62,7 +65,7 @@ if (!form.condition) {
     }
 
     return errors;
-  }, [form]);
+  }, [form, marketSource]);
   const scoreReady = calculated && validation.length === 0;
 
   const update=(key,value)=>{
@@ -212,6 +215,7 @@ const aprGuidance =
         <section className="card formCard">
           <h2>Calculate Your Deal</h2>
         <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
+        <p className="muted">* Required to calculate a score</p>
           
  <div className="beforeCalculator">
   <strong>📋 Before you enter your numbers, get these from the dealer:</strong>
@@ -227,7 +231,7 @@ const aprGuidance =
 </div> <Section title="🚙 Vehicle">
             <div className="formGrid">
               <div className="field">
-                <label>Vehicle condition</label>
+                <label>Vehicle condition *</label>
                 <div className="seg">
                   <button className={form.condition==="new"?"selected":""} onClick={()=>update("condition","new")}>New</button>
                   <button className={form.condition==="used"?"selected":""} onClick={()=>update("condition","used")}>Used</button>
@@ -252,11 +256,11 @@ const aprGuidance =
   </p>
 
  <div className="marketSource">
-  <label htmlFor="marketSource"><strong>How did you estimate the market value?</strong></label>
+  <label htmlFor="marketSource"><strong>How did you estimate the market value? *</strong></label>
   <select
     id="marketSource"
     value={marketSource}
-    onChange={e => setMarketSource(e.target.value)}
+    onChange={e => {setMarketSource(e.target.value); setCalculated(false);}}
   >
     <option value="" disabled>Select a source</option>
     <option value="multiple">I compared multiple sources</option>
@@ -315,10 +319,10 @@ const aprGuidance =
 
           <Section title="💰 Financing">
             <div className="formGrid">
-              <Field label="APR (%)" id="apr" value={form["apr"]} onChange={value => update("apr", value)}/>
+              <Field label="APR (%) *" id="apr" value={form["apr"]} onChange={value => update("apr", value)}/>
 
               <div className="field">
-                <label>Loan term</label>
+                <label>Loan term *</label>
              <select value={form.term} onChange={e=>update("term",Number(e.target.value))}>
             <option value="">Select loan term</option>
                   {[36,48,60,72,84,96].map(x=><option key={x}>{x}</option>)}
