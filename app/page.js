@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { calculateDealScore } from "../lib/scoring";
 import { checkDealerNumbers } from "../lib/dealer-checks";
+import { compareLoanTerms } from "../lib/payment";
 import { track } from "@vercel/analytics";
 import "./globals.css";
 
@@ -21,6 +22,7 @@ export default function Home() {
   const [attempted,setAttempted] = useState(false);
   const [dealerDetails,setDealerDetails] = useState({outTheDoor:"", taxes:"", titleRegistration:"", otherGovernmentFees:"", payment:"", financeGovernmentCharges:true});
   const result = useMemo(()=>calculateDealScore({...form,...dealerDetails}),[form,dealerDetails]);
+  const termComparison = useMemo(()=>compareLoanTerms({...form,...dealerDetails}),[form,dealerDetails]);
   const dealerCheck = checkDealerNumbers(form, dealerDetails);
   const updateDealerDetail = (key, value) => {
     setDealerDetails(prev => ({...prev, [key]:value}));
@@ -572,6 +574,20 @@ const aprGuidance =
               </div>
               <p className="muted">{dealerCheck.completeCosts ? "Out-the-door price is before any down payment or trade-in. Blank add-ons or dealer fees are treated as $0." : "Out-the-door total is incomplete until you enter taxes, title and registration, and other government fees (use 0 when none). Blank add-ons or dealer fees are treated as $0."}</p>
               <p className="muted">This payment uses only the charges you entered. Confirm the actual amount financed and payment on the dealer's contract.</p>
+
+              {termComparison && <section className="termCompare" aria-label="Loan term comparison">
+                <h3>What if you chose a shorter loan?</h3>
+                <p>Same estimated amount financed and APR. The score above uses your selected term.</p>
+                <table>
+                  <thead><tr><th scope="col">Loan term</th><th scope="col">Monthly payment</th><th scope="col">Total interest</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">{termComparison.term} months (selected)</th><td>{money(termComparison.currentPayment)}</td><td>{money(termComparison.currentInterest)}</td></tr>
+                    <tr><th scope="row">{termComparison.shorterTerm} months</th><td>{money(termComparison.shorterPayment)}</td><td>{money(termComparison.shorterInterest)}</td></tr>
+                  </tbody>
+                </table>
+                <p>A shorter loan raises the estimated payment by <strong>{money(termComparison.shorterPayment - termComparison.currentPayment)}/month</strong> and saves about <strong>{money(termComparison.currentInterest - termComparison.shorterInterest)}</strong> in interest if all payments are made on time. Ask the dealer whether the shorter term is available at the same APR.</p>
+              </section>}
+
 
               <div className="breakdown">
                 {Object.entries(result.categories).map(([key,val])=>
