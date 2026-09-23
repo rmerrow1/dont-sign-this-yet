@@ -81,13 +81,11 @@ if (!marketSource) {
     document.getElementById("results")?.scrollIntoView({behavior:"smooth",block:"start"});
   };
 
-const progress = Math.round(
-  Object.entries(form).filter(([key, value]) =>
-    key !== "credit" && String(value).trim() !== ""
-  ).length /
-  (Object.keys(initial).length - 1) *
-  100
-);
+const requiredNumbers = ["price", "market", "apr", "term", "income", "expenses"];
+const requiredComplete = requiredNumbers.filter(key =>
+  String(form[key] ?? "").trim() !== "" && Number.isFinite(Number(form[key])) && Number(form[key]) > 0
+).length + (form.condition ? 1 : 0) + (marketSource ? 1 : 0);
+const progress = Math.round(requiredComplete / 8 * 100);
 
 const price = Number(form.price) || 0;
 const market = Number(form.market) || 1;
@@ -196,7 +194,7 @@ const aprGuidance =
     <div className="progress">
       <div className="progressFill" style={{width:`${progress}%`}}/>
       <div className="progressText">
-        <span>Deal details: {progress}% complete</span>
+        <span>Required details: {progress}% complete</span>
        
       </div>
     </div>
