@@ -731,17 +731,7 @@ if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference)
   }
 }
 
- const hasNumbers =
-  price > 0 ||
-  outTheDoor > 0 ||
-  tradeValue > 0 ||
-    tradeOwed > 0 ||
-    down > 0 ||
-    addons > 0 ||
-    fees > 0 ||
-    apr > 0 ||
-    term > 0 ||
-    payment > 0;
+ const hasNumbers = Object.values(data).some(value => String(value).trim() !== "");
 
   return (
     <section className="card info" id="worksheet">
@@ -893,15 +883,15 @@ if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference)
         </div>
       )}
 
-     {hasNumbers && (
   <button
     type="button"
     className="primary"
+    disabled={!hasNumbers}
     onClick={() => onUseInCalculator(data)}
   >
     Use These Numbers in Calculator
   </button>
-)} <p className="muted">
+ <p className="muted">
         This worksheet is a math and review tool. It does not determine whether
         a deal is good or bad and does not replace reviewing your contract.
       </p>
