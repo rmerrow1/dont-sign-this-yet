@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { calculateDealScore } from "../lib/scoring";
+import { checkDealerNumbers } from "../lib/dealer-checks";
 import { track } from "@vercel/analytics";
 import "./globals.css";
 
@@ -18,32 +19,12 @@ export default function Home() {
   const [marketSource,setMarketSource] = useState("");
   const [calculated,setCalculated] = useState(false);
   const [attempted,setAttempted] = useState(false);
-  const [worksheetTransferred,setWorksheetTransferred] = useState(false);
+  const [dealerDetails,setDealerDetails] = useState({outTheDoor:"", taxes:"", titleRegistration:"", otherGovernmentFees:"", payment:""});
   const result = useMemo(()=>calculateDealScore(form),[form]);
-
-  const useWorksheet = (worksheet) => {
-  setForm(prev => ({
-    ...prev,
-  condition: worksheet.condition,
-    price: worksheet.price,
-    apr: worksheet.apr,
-  term: worksheet.term,
-    down: worksheet.down,
-    tradeValue: worksheet.tradeValue,
-    tradeOwed: worksheet.tradeOwed,
-    addons: worksheet.addons,
-    fees: worksheet.fees
-  }));
-
-  setCalculated(false);
-  setAttempted(false);
-setWorksheetTransferred(true);
-    track("Worksheet Used");
-  document.getElementById("calculator")?.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-};
+  const dealerCheck = checkDealerNumbers(form, dealerDetails);
+  const updateDealerDetail = (key, value) => setDealerDetails(prev => ({...prev, [key]:value}));
+  const dealerDetailError = Object.values(dealerDetails).some(value =>
+    String(value).trim() && (!Number.isFinite(Number(value)) || Number(value) < 0));
 
   const validation = useMemo(() => {
     const errors = [];
@@ -86,7 +67,7 @@ if (!form.condition) {
 
   const update=(key,value)=>{
     setForm(f=>({...f,[key]:value}));
-  
+    setCalculated(false);
   };
 
   const calculate=()=>{
@@ -231,12 +212,6 @@ const aprGuidance =
         <section className="card formCard">
           <h2>Calculate Your Deal</h2>
         <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
-{worksheetTransferred && (
-  <div className="beforeCalculator">
-    <strong>✓ Your worksheet numbers have been transferred.</strong>
-    <p>Review the numbers below, complete the remaining required fields, then calculate your deal score.</p>
-  </div>
-)}
           
  <div className="beforeCalculator">
   <strong>📋 Before you enter your numbers, get these from the dealer:</strong>
@@ -460,6 +435,28 @@ const aprGuidance =
             </div>
           </Section>
 
+          <details className="dealerCheck">
+            <summary>Check the dealer's numbers (optional)</summary>
+            <p className="muted">Compare the dealer's out-the-door price and monthly payment with the figures you entered above. These checks do not change your deal score.</p>
+            <div className="formGrid">
+              <Field label="Dealer's out-the-door price ($)" id="dealer-otd" value={dealerDetails.outTheDoor} onChange={value=>updateDealerDetail("outTheDoor",value)}/>
+              <Field label="Taxes ($)" id="dealer-taxes" value={dealerDetails.taxes} onChange={value=>updateDealerDetail("taxes",value)}/>
+              <Field label="Title and registration ($)" id="dealer-title" value={dealerDetails.titleRegistration} onChange={value=>updateDealerDetail("titleRegistration",value)}/>
+              <Field label="Other government fees ($)" id="dealer-government" value={dealerDetails.otherGovernmentFees} onChange={value=>updateDealerDetail("otherGovernmentFees",value)}/>
+              <Field label="Dealer's monthly payment ($)" id="dealer-payment" value={dealerDetails.payment} onChange={value=>updateDealerDetail("payment",value)}/>
+            </div>
+            <p className="muted">Enter 0 for a charge that doesn't apply. Use the selling price, dealer add-ons and dealer fees above; don't enter them again.</p>
+            {dealerDetailError ? <p className="validation">Enter nonnegative numbers in these optional fields.</p> :
+              (dealerDetails.outTheDoor || dealerDetails.payment) && <div className="dealerCheckResult" aria-live="polite">
+                {!dealerCheck.completeCosts ? <p>Enter taxes, title and registration, and other government fees (use 0 when none) to compare the totals.</p> : <>
+                  {Number(dealerDetails.outTheDoor) > 0 && Number(form.price) > 0 && <p>Itemized out-the-door total: <strong>{money(dealerCheck.total)}</strong></p>}
+                  {Number(dealerDetails.payment) > 0 && Number(form.price) > 0 && Number(form.apr) > 0 && Number(form.term) > 0 && <p>Estimated monthly payment including the listed charges: <strong>{money(dealerCheck.estimatedPayment)}</strong></p>}
+                  {dealerCheck.notes.length ? <ul>{dealerCheck.notes.map((note,i)=><li key={i}>{note}</li>)}</ul> :
+                    <p>{dealerCheck.comparisons ? "No difference greater than $25 was found in the comparisons available from your entries." : "Enter the vehicle price, APR and loan term above to check the figures you supplied."}</p>}
+                </>}
+              </div>}
+          </details>
+
           <button className="calculate" onClick={calculate}>
             Calculate My Deal Score →
           </button>
@@ -611,7 +608,7 @@ const aprGuidance =
     ["5️⃣","Which add-ons are optional?","Ask what each add-on costs and whether you can decline it."],
     ["6️⃣","Can I take the paperwork home to review?","You should be able to review the final numbers before signing."]
   ]}
-/><DealWorksheet onUseInCalculator={useWorksheet} /> <section className="card info" id="about">
+/> <section className="card info" id="about">
         <h2>About Don't Sign This Yet</h2>
         <p><b>We're not here to tell you what to do. We're here to help you understand what you're agreeing to.</b></p>
         <p className="muted">
@@ -635,269 +632,7 @@ const aprGuidance =
 }
 
 
-function DealWorksheet({ onUseInCalculator }) {
- const [data, setData] = useState({
-   condition: "",
-  price: "",
-taxes: "",
-titleRegistration: "",
-otherGovernmentFees: "",
-outTheDoor: "",
-  tradeValue: "",
-    tradeOwed: "",
-    down: "",
-    addons: "",
-    fees: "",
-    apr: "",
-    term: "",
-    payment: ""
-  });
-
-  const update = (key) => (value) => {
-    setData(prev => ({ ...prev, [key]: value }));
-  };
-
-  const price = Number(data.price) || 0;
-  const outTheDoor = Number(data.outTheDoor) || 0;
-  const tradeValue = Number(data.tradeValue) || 0;
-  const tradeOwed = Number(data.tradeOwed) || 0;
-  const down = Number(data.down) || 0;
-  const addons = Number(data.addons) || 0;
-  const fees = Number(data.fees) || 0;
-  const taxes = Number(data.taxes) || 0;
-const titleRegistration = Number(data.titleRegistration) || 0;
-const otherGovernmentFees = Number(data.otherGovernmentFees) || 0;
-
-const calculatedOutTheDoor =
-  price +
-  taxes +
-  titleRegistration +
-  otherGovernmentFees +
-  addons +
-  fees;
-  const outTheDoorDifference = outTheDoor - calculatedOutTheDoor;
-  const apr = Number(data.apr) || 0;
-  const term = Number(data.term) || 0;
-  const payment = Number(data.payment) || 0;
-
-  const negativeEquity = Math.max(0, tradeOwed - tradeValue);
-  const estimatedFinanced = Math.max(
-    0,
-    price + addons + fees + negativeEquity - down
-  );
-
-  const estimatedPayment =
-    apr > 0 && term > 0 && estimatedFinanced > 0
-      ? estimatedFinanced *
-        (apr / 1200) /
-        (1 - Math.pow(1 + apr / 1200, -term))
-      : 0;
-
-  const checks = [];
-if (outTheDoor > 0 && calculatedOutTheDoor > 0 && Math.abs(outTheDoorDifference) > 25) {
-  const direction = outTheDoorDifference > 0 ? "higher" : "lower";
-  checks.push(
-    `The stated out-the-door price is ${money(Math.abs(outTheDoorDifference))} ${direction} than the calculated amount. Ask the dealer to explain the difference and verify the taxes, title/registration, fees, and add-ons.`
-  );
-}
-  if (price > 0 && addons > price * 0.15) {
-    checks.push("Dealer add-ons are more than 15% of the vehicle price.");
-  }
-
-  if (price > 0 && negativeEquity >= price * 0.25) {
-    checks.push("Negative equity is at least 25% of the vehicle price.");
-  }
-
-  if (apr > 0 && apr >= 15) {
-    checks.push("The APR is high enough to warrant comparing another financing offer.");
-  }
-
-  if (term >= 84) {
-    checks.push("The loan term is 84 months or longer.");
-  }
-
- if (payment > 0 && estimatedPayment > 0) {
-  const difference = Math.abs(payment - estimatedPayment);
-
-  if (difference > 25) {
-    const direction =
-      payment < estimatedPayment
-        ? "lower"
-        : "higher";
-
-    checks.push(
-      `The stated payment is about ${money(difference)} ${direction} than our estimate. Ask the dealer to explain the difference and verify the amount financed, APR, term, and any credits or fees.`
-    );
-  }
-}
-
- const hasNumbers = Object.values(data).some(value => String(value).trim() !== "");
-
-  return (
-    <section className="card info" id="worksheet">
-      <h2>📋 Deal Worksheet</h2>
-      <p>
-        Enter the numbers from the dealer's worksheet or buyer's order.
-        This tool checks the math and highlights numbers worth reviewing.
-      </p>
-
-<div className="worksheetField">
-  <label>Vehicle condition</label>
-  <div className="choiceRow">
-    <button
-      type="button"
-      className={data.condition === "new" ? "choice active" : "choice"}
-      onClick={() => update("condition")("new")}
-    >
-      New
-    </button>
-    <button
-      type="button"
-      className={data.condition === "used" ? "choice active" : "choice"}
-      onClick={() => update("condition")("used")}
-    >
-      Used
-    </button>
-  </div>
-</div>
-
-
-<div className="worksheetField">
-    
-  
-  <Field label="Vehicle price ($)" id="ws-price" value={data.price} onChange={update("price")} />
-  <p className="muted">Usually listed as the vehicle selling price or cash price.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Out-the-door price ($)" id="ws-otd" value={data.outTheDoor} onChange={update("outTheDoor")} />
-  <p className="muted">
-  This is the total price you're being asked to pay before financing, including the vehicle price, taxes, title/registration, dealer fees and add-ons.
-</p>
-</div> 
-  <div className="worksheetField">
-  <Field label="Taxes ($)" id="ws-taxes" value={data.taxes} onChange={update("taxes")} />
-  <p className="muted">Enter the sales tax shown on the dealer's paperwork.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Title & registration ($)" id="ws-title-registration" value={data.titleRegistration} onChange={update("titleRegistration")} />
-  <p className="muted">Enter title, registration and tag charges shown on the paperwork.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Other government fees ($)" id="ws-government-fees" value={data.otherGovernmentFees} onChange={update("otherGovernmentFees")} />
-  <p className="muted">Enter any other required government charges shown on the paperwork.</p>
-</div>                                                                                           
-
-<div className="worksheetField">
-  <Field label="Trade-in value ($)" id="ws-trade-value" value={data.tradeValue} onChange={update("tradeValue")} />
-  <p className="muted">Look for the amount the dealer is giving you for your trade.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Old loan payoff ($)" id="ws-trade-owed" value={data.tradeOwed} onChange={update("tradeOwed")} />
-  <p className="muted">Find the exact payoff amount for your existing vehicle loan.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Down payment ($)" id="ws-down" value={data.down} onChange={update("down")} />
-  <p className="muted">Enter the cash you're putting toward the purchase.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Dealer add-ons ($)" id="ws-addons" value={data.addons} onChange={update("addons")} />
-  <p className="muted">Look for optional products or services added to the deal.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Dealer fees ($)" id="ws-fees" value={data.fees} onChange={update("fees")} />
-  <p className="muted">Check the buyer's order for dealer or processing fees.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="APR (%)" id="ws-apr" value={data.apr} onChange={update("apr")} />
-  <p className="muted">Find the annual percentage rate on the financing disclosure.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Loan term (months)" id="ws-term" value={data.term} onChange={update("term")} />
-  <p className="muted">Enter the number of monthly payments, such as 60 or 72.</p>
-</div>
-
-<div className="worksheetField">
-  <Field label="Stated monthly payment ($)" id="ws-payment" value={data.payment} onChange={update("payment")} />
-  <p className="muted">Enter the monthly payment shown on the dealer's paperwork.</p>
-</div>
-    
-
-      {hasNumbers && (
-        <div className="next">
-          <h3>Numbers to double-check</h3>
-       {Number(data.outTheDoor) > 0 && (
-  <p>
-    <strong>Out-the-door price:</strong> {money(Number(data.outTheDoor))}
-  </p>
-)}
-
-          {negativeEquity > 0 && (
-            <p>
-              <strong>Negative equity:</strong> {money(negativeEquity)}
-            </p>
-          )}
-
-          {estimatedFinanced > 0 && (
-            <p>
-            <div>Vehicle price before financing adjustments: {money(estimatedFinanced)}</div> 
-            </p>
-          )}
-{calculatedOutTheDoor > 0 && (
-  <p>
-    <strong>Calculated out-the-door price:</strong> {money(calculatedOutTheDoor)}
-  </p>
-)}
-         {payment > 0 && (
-  <p>
-    <strong>Stated monthly payment:</strong> {money(payment)}
-  </p>
-)}
-
-{estimatedPayment > 0 && (
-  <p>
-    <strong>Estimated monthly payment:</strong> {money(estimatedPayment)}
-  </p>
-)} 
-
-          {checks.length > 0 ? (
-            <ul>
-              {checks.map((check, i) => (
-                <li key={i}>{check}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="muted">
-              No specific calculation warning was triggered by the numbers entered.
-              Review the complete paperwork before signing.
-            </p>
-          )}
-        </div>
-      )}
-
-  <button
-    type="button"
-    className="primary"
-    disabled={!hasNumbers}
-    onClick={() => onUseInCalculator(data)}
-  >
-    Use These Numbers in Calculator
-  </button>
- <p className="muted">
-        This worksheet is a math and review tool. It does not determine whether
-        a deal is good or bad and does not replace reviewing your contract.
-      </p>
-    </section>
-  );
-}function Field({ label, id, type = "number", value, onChange, children }) {
+function Field({ label, id, type = "number", value, onChange, children }) {
   return (
     <div className="field">
       <label htmlFor={id}>{label}</label>
