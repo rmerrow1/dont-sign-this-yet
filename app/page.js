@@ -539,6 +539,13 @@ const aprGuidance =
     :"Complete the required fields below to calculate your score."}
 </p>
 
+{scoreReady && reserveMonths !== null && reserveMonths < 1 && (
+  <div className="reserveWarning" role="status">
+    <strong>Affordability needs attention</strong>
+    <p>After the down payment and any upfront government charges, your listed savings would leave about <b>{money(Math.max(0, Number(form.savings) - Number(form.down || 0) - upfrontCharges))}</b>. That covers less than one month of the <b>{money(Number(form.expenses))}</b> in monthly essential expenses you entered. Review how much cash you want available before signing.</p>
+  </div>
+)}
+
 {!scoreReady && (
   <div className="missingFields">
     <strong>Still needed:</strong>
