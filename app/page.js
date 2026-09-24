@@ -268,6 +268,7 @@ const aprGuidance =
           
  <details className="helpDetails beforeCalculator">
   <summary>📋 What numbers should I get from the dealer?</summary>
+  <p><a href="/dealer-checklist">Open the printable dealer numbers checklist →</a></p>
   <ul>
     <li>Vehicle selling price</li>
     <li>Out-the-door price</li>
@@ -679,6 +680,7 @@ const aprGuidance =
         <a href="/out-the-door-price">Read the out-the-door price guide →</a>
         <p>Checking the extras on a quote? <a href="/dealer-add-ons">See which dealer add-ons you can decline →</a></p>
         <p>Owe more than your trade is worth? <a href="/negative-equity">Read the negative-equity guide →</a></p>
+        <p>Going to the dealership? <a href="/dealer-checklist">Bring the dealer numbers checklist →</a></p>
       </section>
 
     
