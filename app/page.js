@@ -585,7 +585,7 @@ const aprGuidance =
                     <tr><th scope="row">{termComparison.shorterTerm} months</th><td>{money(termComparison.shorterPayment)}</td><td>{money(termComparison.shorterInterest)}</td></tr>
                   </tbody>
                 </table>
-                <p>A shorter loan raises the estimated payment by <strong>{money(termComparison.shorterPayment - termComparison.currentPayment)}/month</strong> and saves about <strong>{money(termComparison.currentInterest - termComparison.shorterInterest)}</strong> in interest if all payments are made on time. Ask the dealer whether the shorter term is available at the same APR.</p>
+                <p>A shorter loan raises the estimated payment by <strong>{money(termComparison.shorterPayment - termComparison.currentPayment)}/month</strong> and saves about <strong>{money(Math.round(termComparison.currentInterest) - Math.round(termComparison.shorterInterest))}</strong> in interest if all payments are made on time. Ask the dealer whether the shorter term is available at the same APR.</p>
               </section>}
 
 
