@@ -3,7 +3,7 @@ import "../globals.css";
 export const metadata = {
   title: "How to Check a Dealer's Out-the-Door Price | Don't Sign This Yet",
   description: "Add the vehicle price, dealer fees, add-ons, taxes and title charges to check a car dealer's out-the-door quote before considering your down payment or trade-in.",
-  alternates: { canonical: "https://dontsignthisyet.com/out-the-door-price" }
+  alternates: { canonical: "https://www.dontsignthisyet.com/out-the-door-price" }
 };
 
 export default function OutTheDoorPriceGuide() {
