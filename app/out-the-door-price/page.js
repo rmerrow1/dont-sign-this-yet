@@ -34,6 +34,7 @@ export default function OutTheDoorPriceGuide() {
         <h2>Keep the purchase price separate from the loan</h2>
         <p>The example total is before the buyer&apos;s cash and trade-in. A $3,000 down payment lowers the amount borrowed. If the trade is worth $7,000 but its payoff is $9,000, the $2,000 difference is negative equity; financing that old balance increases the new loan. If all $31,750 of the purchase charges are financed, the estimated amount borrowed is <strong>$31,750 − $3,000 + $2,000 = $30,750</strong>. Interest is then calculated on the loan; it is not part of the out-the-door purchase price.</p>
         <p>Some taxes or fees may be paid upfront instead of financed. Enter them accurately when comparing the payment, and verify the contract&apos;s amount financed.</p>
+        <p>Trading in a car with a loan? <a href="/negative-equity">See how negative equity affects the new deal</a>.</p>
 
         <h2>Questions to ask before signing</h2>
         <ul>

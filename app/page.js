@@ -669,6 +669,7 @@ const aprGuidance =
         <p>See which charges belong in a dealer&apos;s out-the-door quote, then compare the itemized total with the calculator.</p>
         <a href="/out-the-door-price">Read the out-the-door price guide →</a>
         <p>Checking the extras on a quote? <a href="/dealer-add-ons">See which dealer add-ons you can decline →</a></p>
+        <p>Owe more than your trade is worth? <a href="/negative-equity">Read the negative-equity guide →</a></p>
       </section>
 
     
