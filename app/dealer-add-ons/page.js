@@ -3,7 +3,7 @@ import "../globals.css";
 export const metadata = {
   title: "Which Car Dealer Add-Ons Can You Decline? | Don't Sign This Yet",
   description: "Learn how to identify optional car dealer add-ons, ask for an itemized quote without them, and check how they affect your loan.",
-  alternates: { canonical: "https://dontsignthisyet.com/dealer-add-ons" }
+  alternates: { canonical: "https://www.dontsignthisyet.com/dealer-add-ons" }
 };
 
 export default function DealerAddOnsGuide() {
