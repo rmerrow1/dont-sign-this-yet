@@ -44,6 +44,7 @@ export default function OutTheDoorPriceGuide() {
           <li>What are the final APR, loan term, monthly payment and total finance charge?</li>
         </ul>
         <p>Dealer document and preparation fees may be negotiable; government-set taxes, title and registration charges generally are not. The Consumer Financial Protection Bureau recommends comparing the full cost of the car and financing terms, rather than focusing only on the monthly payment.</p>
+        <p>Unsure which extras to keep? Read our <a href="/dealer-add-ons">guide to optional dealer add-ons</a> before comparing quotes.</p>
 
         <a className="guideAction" href="/#calculator">Check your deal in the calculator →</a>
         <p className="guideNote">The calculator uses the numbers you enter and cannot verify the dealer&apos;s paperwork. Compare its estimate with the final written contract.</p>
