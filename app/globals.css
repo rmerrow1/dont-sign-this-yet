@@ -51,6 +51,9 @@
 @media(max-width:420px){.termCompare{padding:12px}.termCompare table{font-size:12px}.termCompare th,.termCompare td{padding:6px 2px}}
 .results{scroll-margin-top:96px}
 .scoreCard{padding-top:24px}
+.reserveWarning{margin:14px 0 4px;padding:14px;text-align:left;border:1px solid #e2bd69;border-radius:12px;background:#fff8e9;color:#573c0a}
+.reserveWarning strong{display:block;font-size:15px}
+.reserveWarning p{margin:7px 0 0;font-size:14px;line-height:1.5}
 .financeCharges{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:14px;font-weight:700;line-height:1.4;color:var(--navy);cursor:pointer}
 .financeCharges input{width:18px;height:18px;flex:none;margin:1px 0 0;cursor:pointer}
 .marketSource{margin-top:14px}
