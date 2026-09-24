@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
-  metadataBase: new URL("https://dontsignthisyet.com"),
+  metadataBase: new URL("https://www.dontsignthisyet.com"),
   title: "Don't Sign This Yet",
   description: "Understand your vehicle deal before you sign."
 };
