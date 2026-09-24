@@ -664,6 +664,11 @@ const aprGuidance =
           ["🚨","Critical Red Flags","Certain severe risks can cap the overall score because strengths elsewhere should not completely cancel them out."]
         ]}
       />
+      <section className="card guidePromo">
+        <h2>Start with the full price</h2>
+        <p>See which charges belong in a dealer&apos;s out-the-door quote, then compare the itemized total with the calculator.</p>
+        <a href="/out-the-door-price">Read the out-the-door price guide →</a>
+      </section>
 
     
 
