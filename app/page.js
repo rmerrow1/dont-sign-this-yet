@@ -265,6 +265,7 @@ const aprGuidance =
           <h2>Calculate Your Deal</h2>
         <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
         <p className="muted">* Required to calculate a score</p>
+        <p className="checklistCallout">📋 Going to the dealership? <a href="/dealer-checklist">Open the printable dealer numbers checklist →</a></p>
           
  <details className="helpDetails beforeCalculator">
   <summary>📋 What numbers should I get from the dealer?</summary>
