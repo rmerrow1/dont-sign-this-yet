@@ -26,7 +26,8 @@ const groups = [
     ["APR", "Annual percentage rate"],
     ["Loan term", "Number of monthly payments"],
     ["Monthly payment", "For this exact price and loan term"],
-    ["Total of payments and finance charge", "Compare the full cost of the loan"]
+    ["Total of payments", "All scheduled payments combined"],
+    ["Finance charge", "The total borrowing cost shown in the loan disclosure"]
   ]}
 ];
 
@@ -39,7 +40,7 @@ export default function DealerChecklist() {
       <div className="checklistGroups">{groups.map(group => <section className="checklistGroup" key={group.title}>
         <h2>{group.title}</h2>
         <div className="checklistRows">{group.items.map(([label, hint]) => <div className="checklistRow" key={label}>
-          <span className="checklistBox" aria-hidden="true"/><div className="checklistLabel"><strong>{label}</strong><small>{hint}</small></div><span className="checklistBlank" aria-label={`${label} amount`}>$ __________</span>
+          <span className="checklistBox" aria-hidden="true"/><div className="checklistLabel"><strong>{label}</strong><small>{hint}</small></div><span className="checklistBlank" aria-label={`${label} value`}>{label === "APR" ? "__________ %" : label === "Loan term" ? "__________ months" : "$ __________"}</span>
         </div>)}</div>
       </section>)}</div>
       <div className="checklistNotes"><strong>Before signing:</strong> Ask for a revised quote without any add-on you do not want. Check whether taxes and government fees are paid upfront or financed. Compare the final buyer&apos;s order and financing contract with these figures; a monthly payment alone does not show the full cost.</div>
