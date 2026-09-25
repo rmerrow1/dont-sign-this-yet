@@ -84,7 +84,32 @@ if (!marketSource) {
 
   const calculate=()=>{
   setAttempted(true);
-  if (validation.length) return;
+  if (validation.length) {
+    const requiredFields = [
+      [!form.condition, "condition-new"],
+      [!(Number.isFinite(Number(form.price)) && Number(form.price) > 0), "price"],
+      [!(Number.isFinite(Number(form.market)) && Number(form.market) > 0), "market"],
+      [!marketSource, "marketSource"],
+      [!(String(form.apr).trim() !== "" && Number.isFinite(Number(form.apr)) && Number(form.apr) >= 0), "apr"],
+      [!(Number(form.term) > 0), "term"],
+      [!(Number.isFinite(Number(form.income)) && Number(form.income) > 0), "income"],
+      [!(Number.isFinite(Number(form.expenses)) && Number(form.expenses) > 0), "expenses"]
+    ];
+    const optionalFields = ["down", "tradeValue", "tradeOwed", "addons", "fees", "savings", "insurance", "fuel", "maintenance"]
+      .map(key => [String(form[key]).trim() !== "" && (!Number.isFinite(Number(form[key])) || Number(form[key]) < 0), key]);
+    const governmentFields = [["taxes", "dealer-taxes"], ["titleRegistration", "dealer-title"], ["otherGovernmentFees", "dealer-government"]]
+      .map(([key, id]) => [String(dealerDetails[key]).trim() !== "" && (!Number.isFinite(Number(dealerDetails[key])) || Number(dealerDetails[key]) < 0), id]);
+    const firstInvalid = [...requiredFields, ...optionalFields, ...governmentFields].find(([invalid]) => invalid)?.[1];
+    if (firstInvalid?.startsWith("dealer-")) document.getElementById("dealer-costs").open = true;
+    requestAnimationFrame(() => {
+      const target = document.getElementById(firstInvalid);
+      if (!target) return;
+      target.focus({preventScroll:true});
+      const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+      window.scrollTo({top: window.scrollY + target.getBoundingClientRect().top - headerHeight - 24, behavior:"smooth"});
+    });
+    return;
+  }
     setCalculated(true);
     track("Calculate Score");
     requestAnimationFrame(() => {
@@ -284,8 +309,8 @@ const aprGuidance =
               <div className="field">
                 <label>Vehicle condition *</label>
                 <div className="seg">
-                  <button className={form.condition==="new"?"selected":""} onClick={()=>update("condition","new")}>New</button>
-                  <button className={form.condition==="used"?"selected":""} onClick={()=>update("condition","used")}>Used</button>
+                  <button id="condition-new" type="button" aria-pressed={form.condition==="new"} className={form.condition==="new"?"selected":""} onClick={()=>update("condition","new")}>New</button>
+                  <button type="button" aria-pressed={form.condition==="used"} className={form.condition==="used"?"selected":""} onClick={()=>update("condition","used")}>Used</button>
                 </div>
               </div>
 
@@ -372,8 +397,8 @@ const aprGuidance =
               <Field label="APR (%) *" id="apr" value={form["apr"]} onChange={value => update("apr", value)}/>
 
               <div className="field">
-                <label>Loan term *</label>
-             <select value={form.term} onChange={e=>update("term",Number(e.target.value))}>
+                <label htmlFor="term">Loan term *</label>
+             <select id="term" value={form.term} onChange={e=>update("term",Number(e.target.value))}>
             <option value="">Select loan term</option>
                   {[36,48,60,72,84,96].map(x=><option key={x}>{x}</option>)}
                 </select>
@@ -382,8 +407,8 @@ const aprGuidance =
               <Field label="Down payment ($)" id="down" value={form["down"]} onChange={value => update("down", value)}/>
 
               <div className="field">
-                <label>Credit profile</label>
-                <select value={form.credit} onChange={e=>update("credit",e.target.value)}>
+                <label htmlFor="credit">Credit profile</label>
+                <select id="credit" value={form.credit} onChange={e=>update("credit",e.target.value)}>
                   <option value="super">Excellent</option>
                   <option value="prime">Prime / Good</option>
                   <option value="near">Near Prime</option>
@@ -540,7 +565,7 @@ const aprGuidance =
 <p className="muted">
   {scoreReady
     ?"Review the strengths and concerns below before making your decision."
-    :"Complete the required fields below to calculate your score."}
+    :validation.length ? "Complete or correct the fields below to calculate your score." : "Your entries changed. Recalculate to update your score."}
 </p>
 
 {scoreReady && reserveNeedsCaution && (
@@ -550,7 +575,7 @@ const aprGuidance =
   </div>
 )}
 
-{!scoreReady && (
+{!scoreReady && requiredComplete < 8 && (
   <div className="missingFields">
     <strong>Still needed:</strong>
     <ul>
