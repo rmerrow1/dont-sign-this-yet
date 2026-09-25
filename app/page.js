@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { calculateDealScore } from "../lib/scoring";
 import { checkDealerNumbers } from "../lib/dealer-checks";
 import { compareLoanTerms } from "../lib/payment";
@@ -20,11 +20,19 @@ export default function Home() {
   const [marketSource,setMarketSource] = useState("");
   const [calculated,setCalculated] = useState(false);
   const [attempted,setAttempted] = useState(false);
+  const startedRef = useRef(false);
+  const completedRef = useRef(false);
   const [dealerDetails,setDealerDetails] = useState({outTheDoor:"", taxes:"", titleRegistration:"", otherGovernmentFees:"", payment:"", financeGovernmentCharges:true});
   const result = useMemo(()=>calculateDealScore({...form,...dealerDetails}),[form,dealerDetails]);
   const termComparison = useMemo(()=>compareLoanTerms({...form,...dealerDetails}),[form,dealerDetails]);
   const dealerCheck = checkDealerNumbers(form, dealerDetails);
+  const markStarted = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    track("Calculator Started");
+  };
   const updateDealerDetail = (key, value) => {
+    markStarted();
     setDealerDetails(prev => ({...prev, [key]:value}));
     if (["taxes", "titleRegistration", "otherGovernmentFees", "financeGovernmentCharges"].includes(key)) setCalculated(false);
   };
@@ -78,11 +86,14 @@ if (!marketSource) {
   const scoreReady = calculated && validation.length === 0;
 
   const update=(key,value)=>{
+    markStarted();
     setForm(f=>({...f,[key]:value}));
     setCalculated(false);
   };
 
   const calculate=()=>{
+  markStarted();
+  track("Calculate Attempted");
   setAttempted(true);
   if (validation.length) {
     const requiredFields = [
@@ -111,6 +122,10 @@ if (!marketSource) {
     return;
   }
     setCalculated(true);
+    if (!completedRef.current) {
+      completedRef.current = true;
+      track("Calculator Completed");
+    }
     track("Calculate Score");
     requestAnimationFrame(() => {
       const results = document.getElementById("results");
@@ -290,11 +305,11 @@ const aprGuidance =
           <h2>Calculate Your Deal</h2>
         <p className="muted">You can use approximate numbers. This is a decision-support tool—not financial or legal advice. Your numbers are used to calculate your score in this browser.</p>
         <p className="muted">* Required to calculate a score</p>
-        <p className="checklistCallout">📋 Going to the dealership? <a href="/dealer-checklist">Open the printable dealer numbers checklist →</a></p>
+        <p className="checklistCallout">📋 Going to the dealership? <a href="/dealer-checklist" onClick={()=>track("Checklist Link Clicked")}>Open the printable dealer numbers checklist →</a></p>
           
  <details className="helpDetails beforeCalculator">
   <summary>📋 What numbers should I get from the dealer?</summary>
-  <p><a href="/dealer-checklist">Open the printable dealer numbers checklist →</a></p>
+  <p><a href="/dealer-checklist" onClick={()=>track("Checklist Link Clicked")}>Open the printable dealer numbers checklist →</a></p>
   <ul>
     <li>Vehicle selling price</li>
     <li>Out-the-door price</li>
@@ -328,7 +343,7 @@ const aprGuidance =
   <select
     id="marketSource"
     value={marketSource}
-    onChange={e => {setMarketSource(e.target.value); setCalculated(false);}}
+    onChange={e => {markStarted(); setMarketSource(e.target.value); setCalculated(false);}}
   >
     <option value="" disabled>Select a source</option>
     <option value="multiple">I compared multiple sources</option>
@@ -706,7 +721,7 @@ const aprGuidance =
         <a href="/out-the-door-price">Read the out-the-door price guide →</a>
         <p>Checking the extras on a quote? <a href="/dealer-add-ons">See which dealer add-ons you can decline →</a></p>
         <p>Owe more than your trade is worth? <a href="/negative-equity">Read the negative-equity guide →</a></p>
-        <p>Going to the dealership? <a href="/dealer-checklist">Bring the dealer numbers checklist →</a></p>
+        <p>Going to the dealership? <a href="/dealer-checklist" onClick={()=>track("Checklist Link Clicked")}>Bring the dealer numbers checklist →</a></p>
       </section>
 
     
