@@ -758,6 +758,7 @@ const aprGuidance =
   © 2026 Don't Sign This Yet · Provisional Version 1.4 scoring engine · Decision-support tool only
   <br />
   <a href="/feedback">Send Feedback</a>
+  {' · '}<a href="/privacy">Privacy</a>
 </footer>
   </main>;
 }
