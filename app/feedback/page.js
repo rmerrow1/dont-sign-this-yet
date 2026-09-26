@@ -131,7 +131,7 @@ track("Feedback Submitted");
 )}
 
         <p className="muted feedbackNote">
-          Please don't include sensitive personal or financial information.
+          Please don't include sensitive personal or financial information. <a href="/privacy">How we handle feedback</a>.
         </p>
       </div>
     </main>
